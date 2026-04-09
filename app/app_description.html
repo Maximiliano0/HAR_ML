@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAR App — Descripción</title>
+    <style>
+        :root {
+            --bg: #faf8f5;
+            --bg-card: #ffffff;
+            --accent: #6c63ff;
+            --accent-light: #a29bfe;
+            --green: #00b894;
+            --text: #2d3436;
+            --text-sec: #636e72;
+            --text-light: #b2bec3;
+            --border: #dfe6e9;
+            --highlight-bg: #f0edff;
+            --header-bg: #3b3a52;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0;
+        }
+        header {
+            background: var(--header-bg);
+            padding: 24px 40px;
+            border-bottom: 3px solid var(--accent);
+        }
+        header h1 {
+            font-size: 1.8em;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        header p {
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+        h2 {
+            color: var(--accent);
+            font-size: 1.35em;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+        h3 {
+            color: var(--accent);
+            font-size: 1.1em;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+        p, li {
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        ul, ol {
+            padding-left: 24px;
+            margin-bottom: 14px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 14px 0 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+        }
+        th {
+            background: var(--highlight-bg);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        td {
+            background: var(--bg-card);
+        }
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            background: var(--highlight-bg);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.92em;
+        }
+        pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            overflow-x: auto;
+            margin: 12px 0 18px;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 14px 0 20px;
+        }
+        .emoji-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .emoji-card .emoji { font-size: 1.8em; display: block; margin-bottom: 4px; }
+        .emoji-card .name { font-size: 0.82em; color: var(--text-sec); }
+        .pipeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin: 10px 0;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .pipeline-step .num {
+            background: var(--accent);
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+        .model-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-light);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 14px 0 20px;
+            box-shadow: 0 2px 6px rgba(108,99,255,0.08);
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #ffffff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.82em;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+        .tag.green { background: var(--green); }
+        .tag.yellow { background: #fdcb6e; color: var(--text); }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-sec);
+            font-size: 0.85em;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏃 HAR App — Clasificador de Actividades Humanas</h1>
+    <p>Aplicación de escritorio con Tkinter + ConvNeXt-Base para reconocimiento de acciones en imágenes</p>
+</header>
+
+<div class="container">
+
+    <h2>Descripción general</h2>
+    <p>
+        Aplicación de escritorio con interfaz gráfica que clasifica imágenes de personas en
+        <strong>15 actividades humanas</strong> utilizando un modelo <strong>ConvNeXt-Base</strong>
+        entrenado con transfer learning. El pipeline de preprocesamiento replica exactamente el
+        usado durante el entrenamiento.
+    </p>
+
+    <h2>Modelo utilizado</h2>
+    <div class="model-box">
+        <p>
+            <span class="tag">ConvNeXt-Base</span>
+            <span class="tag green">~88M parámetros</span>
+            <span class="tag yellow">80.26% accuracy (TTA)</span>
+        </p>
+        <table>
+            <tr><th>Aspecto</th><th>Detalle</th></tr>
+            <tr><td>Arquitectura</td><td>ConvNeXt-Base (torchvision)</td></tr>
+            <tr><td>Pesos</td><td><code>har_cnn_swa.pth</code> (SWA) o <code>har_cnn_best.pth</code> (fallback)</td></tr>
+            <tr><td>Head custom</td><td>Flatten → LN(1024) → Linear(1024→512) → BN → ReLU → Drop(0.3) → Linear(512→256) → BN → ReLU → Drop(0.2) → Linear(256→15)</td></tr>
+            <tr><td>Entrada</td><td>Imagen RGB 384×288 px, normalizada con media/std ImageNet</td></tr>
+            <tr><td>Salida</td><td>15 probabilidades (softmax)</td></tr>
+        </table>
+    </div>
+
+    <h2>Clases reconocidas (15)</h2>
+    <div class="emoji-grid">
+        <div class="emoji-card"><span class="emoji">📞</span><span class="name">Calling</span></div>
+        <div class="emoji-card"><span class="emoji">👏</span><span class="name">Clapping</span></div>
+        <div class="emoji-card"><span class="emoji">🚴</span><span class="name">Cycling</span></div>
+        <div class="emoji-card"><span class="emoji">💃</span><span class="name">Dancing</span></div>
+        <div class="emoji-card"><span class="emoji">🥤</span><span class="name">Drinking</span></div>
+        <div class="emoji-card"><span class="emoji">🍽️</span><span class="name">Eating</span></div>
+        <div class="emoji-card"><span class="emoji">🤼</span><span class="name">Fighting</span></div>
+        <div class="emoji-card"><span class="emoji">🤗</span><span class="name">Hugging</span></div>
+        <div class="emoji-card"><span class="emoji">😂</span><span class="name">Laughing</span></div>
+        <div class="emoji-card"><span class="emoji">🎧</span><span class="name">Listening to Music</span></div>
+        <div class="emoji-card"><span class="emoji">🏃</span><span class="name">Running</span></div>
+        <div class="emoji-card"><span class="emoji">🪑</span><span class="name">Sitting</span></div>
+        <div class="emoji-card"><span class="emoji">😴</span><span class="name">Sleeping</span></div>
+        <div class="emoji-card"><span class="emoji">📱</span><span class="name">Texting</span></div>
+        <div class="emoji-card"><span class="emoji">💻</span><span class="name">Using Laptop</span></div>
+    </div>
+
+    <h2>Pipeline de preprocesamiento</h2>
+    <p>La app replica el mismo pipeline que <code>data_adecuate.py</code>:</p>
+
+    <div class="pipeline-step">
+        <div class="num">1</div>
+        <div><strong>Lectura</strong> — <code>cv2.imread()</code> en formato BGR</div>
+    </div>
+    <div class="pipeline-step">
+        <div class="num">2</div>
+        <div><strong>Resize</strong> — a 288×384 (W×H) con interpolación adaptativa: <code>INTER_CUBIC</code> (upscale) o <code>INTER_AREA</code> (downscale)</div>
+    </div>
+    <div class="pipeline-step">
+        <div class="num">3</div>
+        <div><strong>CLAHE</strong> — Conversión a LAB → ecualización del canal L (<code>clipLimit=2.0</code>, <code>tileGridSize=8×8</code>) → reconversión a BGR</div>
+    </div>
+    <div class="pipeline-step">
+        <div class="num">4</div>
+        <div><strong>Conversión a RGB</strong> — para compatibilidad con el modelo PyTorch</div>
+    </div>
+    <div class="pipeline-step">
+        <div class="num">5</div>
+        <div><strong>Normalización ImageNet</strong> — mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]</div>
+    </div>
+
+    <h2>Estructura del código</h2>
+
+    <h3><code>preprocess_image(img_path)</code></h3>
+    <p>Lee una imagen, aplica resize + CLAHE y devuelve una tupla <code>(img_clahe_rgb, img_original_rgb)</code>.
+    La imagen original se usa para mostrar en la GUI; la procesada con CLAHE se usa para la clasificación.</p>
+
+    <h3><code>build_model()</code></h3>
+    <p>Construye ConvNeXt-Base con head custom, carga los pesos <code>.pth</code> limpiando prefijos
+    (<code>_orig_mod.</code> de <code>torch.compile()</code>, <code>module.</code> de DataParallel/SWA)
+    y pone en modo evaluación.</p>
+
+    <h3><code>classify(model, img_rgb)</code></h3>
+    <p>Transformada → tensor → forward pass → softmax → devuelve las 15 clases ordenadas por probabilidad descendente.</p>
+
+    <h3><code>HARApp</code> — Interfaz gráfica</h3>
+    <p>Layout de dos paneles con paleta <em>warm neutral</em> (fondo claro, acentos violeta/verde):</p>
+    <table>
+        <tr><th>Componente</th><th>Descripción</th></tr>
+        <tr><td>Header</td><td>Título + nombre del modelo y archivo de pesos</td></tr>
+        <tr><td>Toolbar</td><td>Botón "Seleccionar imagen" + nombre del archivo seleccionado</td></tr>
+        <tr><td>Panel izquierdo</td><td>Imagen <strong>original</strong> (sin procesar), escalada proporcionalmente (máx 340px alto) + tarjeta con predicción y confianza</td></tr>
+        <tr><td>Panel derecho</td><td>15 <code>ttk.Progressbar</code> con porcentaje real (0–100%) para cada clase, ordenadas por probabilidad</td></tr>
+        <tr><td>Status bar</td><td>Mensajes de estado: modelo cargado, procesando, resultado</td></tr>
+    </table>
+
+    <h2>Cómo ejecutar</h2>
+    <pre><code># Desde la raíz del proyecto, con el venv activado:
+python app/app.py</code></pre>
+
+    <h3>Requisitos</h3>
+    <ul>
+        <li>Python 3.10+</li>
+        <li>Virtual environment con las dependencias instaladas</li>
+        <li>Archivo de pesos en <code>data_train/output/</code></li>
+    </ul>
+
+    <h3>Dependencias</h3>
+    <table>
+        <tr><th>Paquete</th><th>Uso</th></tr>
+        <tr><td><code>torch</code> / <code>torchvision</code></td><td>Modelo ConvNeXt-Base, transforms, inferencia</td></tr>
+        <tr><td><code>opencv-python-headless</code></td><td>Lectura de imagen, resize, CLAHE</td></tr>
+        <tr><td><code>Pillow</code></td><td>Conversión para display en Tkinter</td></tr>
+        <tr><td><code>numpy</code></td><td>Manipulación de arrays de imagen</td></tr>
+        <tr><td><code>tkinter</code></td><td>Interfaz gráfica (incluido con Python)</td></tr>
+    </table>
+
+    <h2>Flujo de uso</h2>
+    <ol>
+        <li>Ejecutar <code>python app/app.py</code></li>
+        <li>Esperar a que cargue el modelo (status bar indica "Listo")</li>
+        <li>Clic en <strong>"📂 Seleccionar imagen"</strong></li>
+        <li>Elegir una imagen (<code>.jpg</code>, <code>.png</code>, <code>.bmp</code>, <code>.webp</code>)</li>
+        <li>Se muestra la <strong>imagen original</strong> a la izquierda</li>
+        <li>A la derecha aparecen las 15 barras de progreso con el porcentaje real</li>
+        <li>La clase predicha se muestra en grande con su emoji y porcentaje</li>
+    </ol>
+
+    <h2>Notas técnicas</h2>
+    <ul>
+        <li>El modelo se carga <strong>una sola vez</strong> al iniciar y permanece en memoria</li>
+        <li>Inferencia en <strong>CPU</strong> (<code>map_location="cpu"</code>) — no requiere GPU</li>
+        <li>Las barras son <code>ttk.Progressbar</code> con <strong>escala absoluta</strong> (0–100%), mostrando el porcentaje real de cada clase</li>
+        <li>La GUI muestra la <strong>imagen original</strong> sin procesar; el preprocesamiento (CLAHE) se usa internamente para la clasificación</li>
+        <li>El pipeline es <strong>idéntico</strong> al del entrenamiento, garantizando consistencia</li>
+    </ul>
+
+</div>
+
+<footer>
+    TP Machine Learning — HAR App — ConvNeXt-Base — 2025
+</footer>
+
+</body>
+</html>

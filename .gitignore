@@ -1,0 +1,26 @@
+# Virtual environment
+har_ml_env/
+
+# Dataset (downloaded by the script)
+datos_har/
+datos_har.zip
+train_results.zip
+
+# Model weights (too large for GitHub)
+*.pth
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

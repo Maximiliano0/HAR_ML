@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Adecuación de Imágenes</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Adecuación de Imágenes</h1>
+</header>
+<section id="adecuación-de-imágenes-dataset-har" data-align="center">
+<h1>🔧 Adecuación de Imágenes — Dataset HAR</h1>
+<h3 id="transformación-y-normalización-del-dataset">Transformación y
+normalización del dataset</h3>
+<p><a href=""><img
+src="https://img.shields.io/badge/Imágenes_procesadas-12570-orange"
+alt="Images" /></a> <a href=""><img
+src="https://img.shields.io/badge/Tamaño_objetivo-288x384-blue"
+alt="Size" /></a> <a href=""><img
+src="https://img.shields.io/badge/Clases-15-blueviolet"
+alt="Classes" /></a> <a href=""><img
+src="https://img.shields.io/badge/Balance-838_por_clase-green"
+alt="Balance" /></a></p>
+</section>
+<hr />
+<h2 id="índice">📑 Índice</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 36%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>Sección</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><a href="#-1-objetivo">Objetivo</a></td>
+<td>Qué hace este script</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><a href="#-2-tamaño-objetivo">Tamaño objetivo</a></td>
+<td>Cálculo del tamaño estándar</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><a href="#-3-filtrado-por-tamaño">Filtrado por tamaño</a></td>
+<td>Descarte de imágenes muy pequeñas</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><a href="#-4-balance-de-clases">Balance de clases</a></td>
+<td>Oversampling para equilibrar clases</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><a href="#-5-pipeline-de-procesamiento">Pipeline de
+procesamiento</a></td>
+<td>Resize + CLAHE (LAB) + RGB</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><a href="#-6-ejemplos-visuales">Ejemplos visuales</a></td>
+<td>Antes vs después, pipeline paso a paso</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><a href="#-7-resultados">Resultados</a></td>
+<td>Resumen numérico</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><a href="#-8-cómo-ejecutar">Cómo ejecutar</a></td>
+<td>Instrucciones de ejecución</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="objetivo">🎯 1. Objetivo</h2>
+<p>El script <code>data_adecuate.py</code> toma las imágenes originales
+del dataset HAR (<code>datos_har/dataset/</code>) y genera una versión
+procesada en <code>datos_har/dataset_tr/</code>, aplicando:</p>
+<ol type="1">
+<li><strong>Redimensionado</strong> a un tamaño fijo (288×384 px,
+resolución de entrada del modelo)</li>
+<li><strong>Filtrado</strong>: se descartan imágenes menores al umbral
+mínimo (128×128)</li>
+<li><strong>Oversampling</strong> con reemplazo para igualar todas las
+clases a la más numerosa</li>
+<li><strong>CLAHE</strong> (Contrast Limited Adaptive Histogram
+Equalization) en espacio LAB</li>
+<li><strong>Guardado en RGB</strong> (3 canales) para preservar la
+información de color</li>
+</ol>
+<hr />
+<h2 id="tamaño-objetivo">📐 2. Tamaño objetivo</h2>
+<p>Se utiliza un tamaño <strong>fijo de 288 × 384 píxeles</strong>, que
+coincide con la resolución de entrada del modelo (384×288 HxW). Esto
+elimina el doble resize que ocurría con el tamaño antiguo (256×192).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Dimensión</th>
+<th style="text-align: center;">Promedio real</th>
+<th style="text-align: center;">Tamaño fijo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Ancho</strong></td>
+<td style="text-align: center;">260.4 px</td>
+<td style="text-align: center;"><strong>288 px</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Alto</strong></td>
+<td style="text-align: center;">196.6 px</td>
+<td style="text-align: center;"><strong>384 px</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>El tamaño objetivo es <strong>288 × 384 píxeles</strong> (W × H).</p>
+</blockquote>
+<hr />
+<h2 id="filtrado-por-tamaño">🔍 3. Filtrado por tamaño</h2>
+<p>Se descartan todas las imágenes cuyo ancho <strong>o</strong> alto
+sea menor al umbral mínimo (128×128). Esto permite incluir la mayoría de
+imágenes del dataset, aceptando tanto downscale como upscale
+moderado.</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Imágenes totales</td>
+<td style="text-align: center;">12,600</td>
+</tr>
+<tr>
+<td>Imágenes válidas (≥ 128×128)</td>
+<td style="text-align: center;">12,510</td>
+</tr>
+<tr>
+<td>Imágenes descartadas</td>
+<td style="text-align: center;">90 (0.7%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Distribución por clase después del filtrado:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th style="text-align: center;">Imágenes válidas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>calling</td>
+<td style="text-align: center;">837</td>
+</tr>
+<tr>
+<td>clapping</td>
+<td style="text-align: center;">836</td>
+</tr>
+<tr>
+<td>cycling</td>
+<td style="text-align: center;">837</td>
+</tr>
+<tr>
+<td>dancing</td>
+<td style="text-align: center;">833</td>
+</tr>
+<tr>
+<td>drinking</td>
+<td style="text-align: center;">836</td>
+</tr>
+<tr>
+<td>eating</td>
+<td style="text-align: center;">835</td>
+</tr>
+<tr>
+<td>fighting</td>
+<td style="text-align: center;">834</td>
+</tr>
+<tr>
+<td>hugging</td>
+<td style="text-align: center;">837</td>
+</tr>
+<tr>
+<td>laughing</td>
+<td style="text-align: center;">838</td>
+</tr>
+<tr>
+<td>listening_to_music</td>
+<td style="text-align: center;">835</td>
+</tr>
+<tr>
+<td>running</td>
+<td style="text-align: center;">822</td>
+</tr>
+<tr>
+<td>sitting</td>
+<td style="text-align: center;">833</td>
+</tr>
+<tr>
+<td>sleeping</td>
+<td style="text-align: center;">834</td>
+</tr>
+<tr>
+<td>texting</td>
+<td style="text-align: center;">827</td>
+</tr>
+<tr>
+<td>using_laptop</td>
+<td style="text-align: center;">836</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="balance-de-clases">⚖️ 4. Balance de clases</h2>
+<p>Tras el filtrado, las clases quedan desbalanceadas. Para mantener el
+equilibrio, se realiza <strong>oversampling con reemplazo</strong>
+(seed=42) igualando todas las clases a la clase con más imágenes.</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clase con más imágenes</td>
+<td style="text-align: center;"><code>laughing</code> (838)</td>
+</tr>
+<tr>
+<td>Imágenes por clase (post-balance)</td>
+<td style="text-align: center;"><strong>838</strong></td>
+</tr>
+<tr>
+<td>Total imágenes procesadas</td>
+<td style="text-align: center;"><strong>12,570</strong> (838 × 15)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pipeline-de-procesamiento">⚙️ 5. Pipeline de procesamiento</h2>
+<p>Cada imagen pasa por 3 etapas secuenciales:</p>
+<h3 id="redimensionado-resize">5.1 Redimensionado (Resize)</h3>
+<pre><code>Tamaño variable → 288 × 384 px
+Interpolación adaptativa:
+  - cv2.INTER_CUBIC para upscale (imágenes más chicas que el objetivo)
+  - cv2.INTER_AREA para downscale (imágenes más grandes que el objetivo)</code></pre>
+<h3 id="clahe-contrast-limited-adaptive-histogram-equalization">5.2
+CLAHE (Contrast Limited Adaptive Histogram Equalization)</h3>
+<p>CLAHE (Zuiderveld, 1994) es una extensión de la ecualización
+adaptativa de histograma que limita la amplificación del contraste. La
+imagen se divide en regiones (<em>tiles</em>) de tamaño
+<code>tileGridSize</code> y en cada región se ecualiza el histograma
+local con un límite de recorte <code>clipLimit</code> que previene la
+amplificación excesiva de ruido. El límite de recorte <span
+class="math inline">\(\beta\)</span> controla la máxima amplificación
+permitida:</p>
+<p><span class="math display">\[\beta =
+\frac{N_{\text{pixels\_por\_tile}}}{N_{\text{bins}}} \times
+\text{clipLimit}\]</span></p>
+<p>Con <code>clipLimit=2.0</code> y tiles de 8×8 en una imagen de
+288×384 px, cada tile tiene aproximadamente <span
+class="math inline">\(\frac{288 \times 384}{8 \times 8} \approx
+1{,}728\)</span> píxeles, resultando en <span
+class="math inline">\(\beta \approx \frac{1728}{256} \times 2.0 \approx
+13.5\)</span>. Los bins del histograma local que superen este umbral se
+recortan y redistribuyen.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>clahe <span class="op">=</span> cv2.createCLAHE(clipLimit<span class="op">=</span><span class="fl">2.0</span>, tileGridSize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span></code></pre></div>
+<ul>
+<li>Se convierte la imagen a espacio de color <strong>LAB</strong></li>
+<li>Se aplica CLAHE solo al <strong>canal L</strong> (luminancia)</li>
+<li>Se reconstruye la imagen LAB → BGR</li>
+<li>Mejora el contraste local sin amplificar ruido excesivo</li>
+<li>La imagen se mantiene en <strong>RGB (3 canales)</strong> para
+preservar la información de color</li>
+</ul>
+<h3 id="guardado">5.3 Guardado</h3>
+<ul>
+<li>Se guarda cada imagen procesada como archivo individual en
+<code>datos_har/dataset_tr/</code></li>
+<li>Para duplicados de oversampling se genera un nombre único con sufijo
+<code>_dupN</code></li>
+</ul>
+<div data-align="center">
+<figure>
+<img src="output/pipeline_ejemplo.png"
+alt="Pipeline de procesamiento" />
+<figcaption aria-hidden="true">Pipeline de procesamiento</figcaption>
+</figure>
+</div>
+<hr />
+<h2 id="ejemplos-visuales">🖼️ 6. Ejemplos visuales</h2>
+<p>Comparación lado a lado de imágenes originales vs procesadas para 5
+clases:</p>
+<div data-align="center">
+<figure>
+<img src="output/ejemplos_antes_despues.png"
+alt="Ejemplos antes vs después" />
+<figcaption aria-hidden="true">Ejemplos antes vs después</figcaption>
+</figure>
+</div>
+<hr />
+<h2 id="resultados">📊 7. Resultados</h2>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tamaño objetivo</td>
+<td style="text-align: center;">288 × 384 px</td>
+</tr>
+<tr>
+<td>Umbral mínimo</td>
+<td style="text-align: center;">128 × 128 px</td>
+</tr>
+<tr>
+<td>Imágenes originales</td>
+<td style="text-align: center;">12,600</td>
+</tr>
+<tr>
+<td>Descartadas (menor a umbral)</td>
+<td style="text-align: center;">90</td>
+</tr>
+<tr>
+<td>Post-oversampling por clase</td>
+<td style="text-align: center;">838</td>
+</tr>
+<tr>
+<td><strong>Total procesadas</strong></td>
+<td style="text-align: center;"><strong>12,570</strong></td>
+</tr>
+<tr>
+<td>Clases</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td>Carpeta de salida</td>
+<td style="text-align: center;"><code>datos_har/dataset_tr/</code></td>
+</tr>
+<tr>
+<td>Formato de salida</td>
+<td style="text-align: center;">RGB (3 canales)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cómo-ejecutar">▶️ 8. Cómo ejecutar</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde la raíz del proyecto (tp_ml/)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\har_ml_env\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>python data_trans<span class="op">/</span>data_adecuate<span class="op">.</span><span class="fu">py</span></span></code></pre></div>
+<p><strong>Requisitos:</strong> <code>opencv-python-headless</code>,
+<code>numpy</code>, <code>pandas</code>, <code>Pillow</code>,
+<code>tqdm</code>, <code>matplotlib</code></p>
+<p>Las imágenes procesadas se guardan en
+<code>datos_har/dataset_tr/</code> y los gráficos de ejemplo en
+<code>data_trans/output/</code>.</p>
+<hr />
+<div data-align="center">
+<p><em>Documento generado como parte del proyecto de Machine Learning —
+Adecuación del dataset HAR</em></p>
+</div>
+</body>
+</html>

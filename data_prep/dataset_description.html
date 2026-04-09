@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Descripción del Dataset HAR</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Descripción del Dataset HAR</h1>
+</header>
+<section id="human-action-recognition-har-dataset" data-align="center">
+<h1>🏃 Human Action Recognition (HAR) Dataset</h1>
+<h3 id="descripción-del-dataset">Descripción del Dataset</h3>
+<p><a
+href="https://www.kaggle.com/datasets/meetnagadia/human-action-recognition-har-dataset"><img
+src="https://img.shields.io/badge/Kaggle-Dataset-20BEFF?logo=kaggle&amp;logoColor=white"
+alt="Kaggle" /></a> <a href=""><img
+src="https://img.shields.io/badge/License-ODbL-green"
+alt="License" /></a> <a href=""><img
+src="https://img.shields.io/badge/Im%C3%A1genes-18%2C010-orange"
+alt="Images" /></a> <a href=""><img
+src="https://img.shields.io/badge/Clases-15-blueviolet"
+alt="Classes" /></a></p>
+</section>
+<hr />
+<h2 id="índice">📑 Índice</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 36%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>Sección</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><a href="#-1-información-general">Información General</a></td>
+<td>Ficha técnica del dataset</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><a href="#-2-origen-y-descarga">Origen y Descarga</a></td>
+<td>De dónde proviene y cómo obtenerlo</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><a href="#-3-estructura-de-directorios">Estructura de
+Directorios</a></td>
+<td>Dónde se almacenan las imágenes</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><a href="#-4-clases-del-dataset">Clases del Dataset</a></td>
+<td>Las 15 actividades humanas</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><a href="#-5-distribución-de-clases">Distribución de Clases</a></td>
+<td>Balance y cantidad por clase</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><a href="#-6-análisis-de-tamaños-de-imagen">Análisis de
+Tamaños</a></td>
+<td>Resoluciones, formatos y modos de color</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><a href="#-7-estadísticas-de-canales-rgb">Estadísticas RGB</a></td>
+<td>Media y desviación estándar por canal</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><a href="#-8-muestras-visuales-por-clase">Muestras Visuales</a></td>
+<td>Ejemplos por cada clase</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td><a href="#-9-archivos-csv">Archivos CSV</a></td>
+<td>Descripción de los metadatos</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td><a href="#-10-cómo-ejecutar">Cómo ejecutar</a></td>
+<td>Instrucciones para reproducir el análisis</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="información-general">📋 1. Información General</h2>
+<table>
+<tr>
+<td>
+<b>📦 Nombre</b>
+</td>
+<td>
+Human Action Recognition (HAR) Dataset
+</td>
+</tr>
+<tr>
+<td>
+<b>👤 Autor</b>
+</td>
+<td>
+Meet Nagadia
+</td>
+</tr>
+<tr>
+<td>
+<b>🌐 Plataforma</b>
+</td>
+<td>
+<a href="https://www.kaggle.com/datasets/meetnagadia/human-action-recognition-har-dataset">Kaggle</a>
+</td>
+</tr>
+<tr>
+<td>
+<b>📄 Licencia</b>
+</td>
+<td>
+Open Database License (ODbL)
+</td>
+</tr>
+<tr>
+<td>
+<b>💾 Tamaño</b>
+</td>
+<td>
+~328 MB
+</td>
+</tr>
+<tr>
+<td>
+<b>🖼️ Total imágenes</b>
+</td>
+<td>
+18,010 (12,600 etiquetadas + 5,410 sin etiqueta)
+</td>
+</tr>
+<tr>
+<td>
+<b>🎯 Tipo de tarea</b>
+</td>
+<td>
+Clasificación de imágenes (Computer Vision)
+</td>
+</tr>
+<tr>
+<td>
+<b>🏷️ Clases</b>
+</td>
+<td>
+15 actividades humanas
+</td>
+</tr>
+<tr>
+<td>
+<b>⚖️ Balance</b>
+</td>
+<td>
+Perfectamente balanceado (840 imágenes/clase)
+</td>
+</tr>
+</table>
+<p>El dataset contiene fotografías de personas realizando <strong>15
+actividades humanas diferentes</strong> (llamar, aplaudir, andar en
+bicicleta, bailar, etc.). Estas imágenes son de resolución variada, en
+formato JPEG, y todas en modo RGB. El objetivo del dataset es servir
+como base para entrenar modelos de clasificación de imágenes mediante
+redes neuronales convolucionales (CNN).</p>
+<hr />
+<h2 id="origen-y-descarga">📥 2. Origen y Descarga</h2>
+<p>El dataset fue publicado por <strong>Meet Nagadia</strong> en Kaggle,
+originalmente asociado al desafío <em>DPhi Data Sprint 76 - Human
+Activity Recognition</em>.</p>
+<p>Se descarga automáticamente mediante la librería
+<code>kagglehub</code> con el parámetro <code>output_dir</code>, lo que
+permite almacenarlo directamente dentro de la carpeta del proyecto:</p>
+<pre><code>tp_ml/
+└── datos_har/
+    └── Human Action Recognition/
+        ├── dataset/       (imágenes etiquetadas)
+        ├── new_data/      (imágenes sin etiqueta)
+        ├── dataset.csv
+        └── new_data.csv</code></pre>
+<blockquote>
+<p>💡 Para descargar se requieren credenciales de Kaggle configuradas en
+<code>~/.kaggle/kaggle.json</code>.</p>
+</blockquote>
+<hr />
+<h2 id="estructura-de-directorios">📁 3. Estructura de Directorios</h2>
+<p>El script descarga el dataset dentro de <code>datos_har/</code> en la
+raíz del proyecto y renombra automáticamente las carpetas y archivos CSV
+originales:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr>
+<th>Original</th>
+<th>Renombrado</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>train/</code></td>
+<td><strong><code>dataset/</code></strong></td>
+<td>12,600 imágenes JPEG etiquetadas vía CSV</td>
+</tr>
+<tr>
+<td><code>test/</code></td>
+<td><strong><code>new_data/</code></strong></td>
+<td>5,410 imágenes JPEG sin etiqueta</td>
+</tr>
+<tr>
+<td><code>Training_set.csv</code></td>
+<td><strong><code>dataset.csv</code></strong></td>
+<td>Mapeo <code>filename → label</code> para dataset</td>
+</tr>
+<tr>
+<td><code>Testing_set.csv</code></td>
+<td><strong><code>new_data.csv</code></strong></td>
+<td>Lista de filenames de new_data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ubicación de las imágenes:</strong></p>
+<ul>
+<li>Las imágenes de <strong>dataset</strong> están almacenadas de forma
+<strong>plana</strong> (sin subcarpetas) dentro de
+<code>dataset/</code>. Cada archivo es un JPEG nombrado como
+<code>Image_1.jpg</code>, <code>Image_2.jpg</code>, etc. La etiqueta de
+cada imagen se obtiene del archivo <code>dataset.csv</code>.</li>
+<li>Las imágenes de <strong>new_data</strong> están igualmente
+almacenadas de forma plana dentro de <code>new_data/</code>, sin
+etiquetas asociadas.</li>
+</ul>
+<blockquote>
+<p>📌 El script <code>data_explore.py</code> unifica ambas carpetas
+copiando las imágenes de <code>new_data/</code> dentro de
+<code>dataset/</code>, generando un único directorio con <strong>12,611
+imágenes</strong> para que luego un script de particionado pueda dividir
+train/val/test de forma controlada.</p>
+</blockquote>
+<hr />
+<h2 id="clases-del-dataset">🏷️ 4. Clases del Dataset</h2>
+<p>El dataset define <strong>15 clases</strong> de actividades
+humanas:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>Clase</th>
+<th style="text-align: center;"></th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><code>calling</code></td>
+<td style="text-align: center;">📞</td>
+<td>Persona hablando por teléfono</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><code>clapping</code></td>
+<td style="text-align: center;">👏</td>
+<td>Persona aplaudiendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><code>cycling</code></td>
+<td style="text-align: center;">🚴</td>
+<td>Persona andando en bicicleta</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><code>dancing</code></td>
+<td style="text-align: center;">💃</td>
+<td>Persona bailando</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><code>drinking</code></td>
+<td style="text-align: center;">🥤</td>
+<td>Persona bebiendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><code>eating</code></td>
+<td style="text-align: center;">🍽️</td>
+<td>Persona comiendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><code>fighting</code></td>
+<td style="text-align: center;">🤼</td>
+<td>Personas peleando</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><code>hugging</code></td>
+<td style="text-align: center;">🤗</td>
+<td>Personas abrazándose</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td><code>laughing</code></td>
+<td style="text-align: center;">😂</td>
+<td>Persona riendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td><code>listening_to_music</code></td>
+<td style="text-align: center;">🎧</td>
+<td>Persona escuchando música</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td><code>running</code></td>
+<td style="text-align: center;">🏃</td>
+<td>Persona corriendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td><code>sitting</code></td>
+<td style="text-align: center;">🪑</td>
+<td>Persona sentada</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td><code>sleeping</code></td>
+<td style="text-align: center;">😴</td>
+<td>Persona durmiendo</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td><code>texting</code></td>
+<td style="text-align: center;">📱</td>
+<td>Persona escribiendo en el celular</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td><code>using_laptop</code></td>
+<td style="text-align: center;">💻</td>
+<td>Persona usando una laptop</td>
+</tr>
+</tbody>
+</table>
+<p>Cada clase contiene <strong>840 imágenes etiquetadas</strong> en el
+conjunto de entrenamiento original.</p>
+<hr />
+<h2 id="distribución-de-clases">📊 5. Distribución de Clases</h2>
+<p>El dataset etiquetado contiene <strong>12,600 imágenes</strong>
+distribuidas equitativamente entre las 15 clases (<strong>840 imágenes
+por clase</strong>). Tras la unificación con <code>new_data/</code>, la
+carpeta <code>dataset/</code> totaliza <strong>12,611
+imágenes</strong>.</p>
+<div data-align="center">
+<figure>
+<img src="output/distribucion_clases.png"
+alt="Distribución de clases" />
+<figcaption aria-hidden="true">Distribución de clases</figcaption>
+</figure>
+</div>
+<p><strong>Métricas de balance:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align: center;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total imágenes etiquetadas</td>
+<td style="text-align: center;">12,600</td>
+</tr>
+<tr>
+<td>Imágenes por clase</td>
+<td style="text-align: center;">840</td>
+</tr>
+<tr>
+<td>Clases</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td>Ratio max/min entre clases</td>
+<td style="text-align: center;">1.00</td>
+</tr>
+<tr>
+<td>Desviación estándar entre clases</td>
+<td style="text-align: center;">0.00</td>
+</tr>
+<tr>
+<td><strong>Balance</strong></td>
+<td style="text-align: center;">✅ <strong>Perfectamente
+balanceado</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>El dataset está perfectamente balanceado: todas las clases tienen
+exactamente la misma cantidad de imágenes. Esto elimina la necesidad de
+técnicas de balanceo como oversampling, undersampling o class weights
+durante el entrenamiento.</p>
+</blockquote>
+<p><strong>Métricas formales de balance:</strong></p>
+<p>El <strong>coeficiente de variación</strong> (CV) mide la dispersión
+relativa de las cantidades por clase:</p>
+<p><span class="math display">\[CV = \frac{\sigma}{\mu} =
+\frac{\sqrt{\frac{1}{K}\sum_{k=1}^{K}(n_k -
+\bar{n})^2}}{\bar{n}}\]</span></p>
+<p>donde <span class="math inline">\(n_k\)</span> es el número de
+imágenes de la clase <span class="math inline">\(k\)</span>, <span
+class="math inline">\(\bar{n}\)</span> es la media y <span
+class="math inline">\(K = 15\)</span>. Un <span class="math inline">\(CV
+= 0\)</span> indica balance perfecto, como en este caso.</p>
+<p>La <strong>entropía de Shannon</strong> de la distribución de clases
+cuantifica la uniformidad:</p>
+<p><span class="math display">\[H = -\sum_{k=1}^{K} p_k \log_2(p_k),
+\quad p_k = \frac{n_k}{\sum_{j=1}^{K} n_j}\]</span></p>
+<p>La entropía máxima se alcanza cuando todas las clases son
+equiprobables: <span class="math inline">\(H_{\max} = \log_2(K) =
+\log_2(15) \approx 3.91\)</span> bits. En este dataset, <span
+class="math inline">\(H = H_{\max}\)</span> ya que <span
+class="math inline">\(p_k = 1/15\)</span> para todas las clases,
+confirmando el balance perfecto.</p>
+<hr />
+<h2 id="análisis-de-tamaños-de-imagen">📐 6. Análisis de Tamaños de
+Imagen</h2>
+<p>Las <strong>12,611 imágenes unificadas</strong> del dataset son
+<strong>JPEG</strong> en modo <strong>RGB</strong> (3 canales). Sin
+embargo, las resoluciones son <strong>variadas</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th style="text-align: center;">Mínimo</th>
+<th style="text-align: center;">Máximo</th>
+<th style="text-align: center;">Promedio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ancho (px)</strong></td>
+<td style="text-align: center;">84</td>
+<td style="text-align: center;">478</td>
+<td style="text-align: center;">~260</td>
+</tr>
+<tr>
+<td><strong>Alto (px)</strong></td>
+<td style="text-align: center;">84</td>
+<td style="text-align: center;">318</td>
+<td style="text-align: center;">~197</td>
+</tr>
+</tbody>
+</table>
+<p>Se encontraron <strong>542 resoluciones únicas</strong>. Las más
+frecuentes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Resolución</th>
+<th style="text-align: center;">Cantidad</th>
+<th style="text-align: center;">% del total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">275×183</td>
+<td style="text-align: center;">3,051</td>
+<td style="text-align: center;">24.2%</td>
+</tr>
+<tr>
+<td style="text-align: center;">300×168</td>
+<td style="text-align: center;">1,036</td>
+<td style="text-align: center;">8.2%</td>
+</tr>
+<tr>
+<td style="text-align: center;">183×275</td>
+<td style="text-align: center;">637</td>
+<td style="text-align: center;">5.1%</td>
+</tr>
+<tr>
+<td style="text-align: center;">259×194</td>
+<td style="text-align: center;">614</td>
+<td style="text-align: center;">4.9%</td>
+</tr>
+</tbody>
+</table>
+<div data-align="center">
+<figure>
+<img src="output/distribucion_tamanos.png"
+alt="Distribución de tamaños" />
+<figcaption aria-hidden="true">Distribución de tamaños</figcaption>
+</figure>
+<figure>
+<img src="output/scatter_ancho_alto.png" alt="Scatter ancho vs alto" />
+<figcaption aria-hidden="true">Scatter ancho vs alto</figcaption>
+</figure>
+</div>
+<blockquote>
+<p>⚠️ Dado que las imágenes tienen tamaños variados, será necesario
+aplicar <strong>redimensionado (resize)</strong> a una resolución
+uniforme antes de alimentar un modelo (por ejemplo, 224×224 para
+arquitecturas estándar).</p>
+</blockquote>
+<hr />
+<h2 id="estadísticas-de-canales-rgb">🎨 7. Estadísticas de Canales
+RGB</h2>
+<p>Calculadas sobre una muestra aleatoria de <strong>2,000
+imágenes</strong> (valores normalizados entre 0 y 1):</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align: center;">Canal R</th>
+<th style="text-align: center;">Canal G</th>
+<th style="text-align: center;">Canal B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Media</strong></td>
+<td style="text-align: center;">0.5713</td>
+<td style="text-align: center;">0.5357</td>
+<td style="text-align: center;">0.5040</td>
+</tr>
+<tr>
+<td><strong>Desviación Estándar</strong></td>
+<td style="text-align: center;">0.3080</td>
+<td style="text-align: center;">0.3037</td>
+<td style="text-align: center;">0.3106</td>
+</tr>
+</tbody>
+</table>
+<p>Estos valores permiten aplicar <strong>normalización</strong> al
+preprocesar las imágenes para el modelo:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>transforms.Normalize(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    mean<span class="op">=</span>[<span class="fl">0.5713</span>, <span class="fl">0.5357</span>, <span class="fl">0.5040</span>],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    std<span class="op">=</span>[<span class="fl">0.3080</span>, <span class="fl">0.3037</span>, <span class="fl">0.3106</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<blockquote>
+<p>💡 La media cercana a 0.5 en los tres canales indica imágenes con
+brillo medio. La desviación estándar (~0.31) muestra buena variabilidad
+tonal.</p>
+</blockquote>
+<hr />
+<h2 id="muestras-visuales-por-clase">🖼️ 8. Muestras Visuales por
+Clase</h2>
+<p>A continuación se muestran <strong>3 imágenes de ejemplo por cada una
+de las 15 clases</strong>, que permiten verificar visualmente la
+coherencia de las etiquetas, la variabilidad dentro de cada clase y la
+calidad general de las imágenes:</p>
+<div data-align="center">
+<figure>
+<img src="output/muestras_por_clase.png" alt="Muestras por clase" />
+<figcaption aria-hidden="true">Muestras por clase</figcaption>
+</figure>
+</div>
+<hr />
+<h2 id="archivos-csv">📄 9. Archivos CSV</h2>
+<p>El dataset incluye dos archivos CSV (renombrados por el script) que
+contienen los metadatos de las imágenes:</p>
+<h3 id="dataset.csv"><code>dataset.csv</code></h3>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 21%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td>string</td>
+<td>Nombre del archivo de imagen (ej: <code>Image_1.jpg</code>)</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>string</td>
+<td>Etiqueta de la actividad humana (ej: <code>calling</code>,
+<code>dancing</code>)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Filas:</strong> 12,600 (una por cada imagen etiquetada)</li>
+<li><strong>Uso:</strong> Es el archivo principal de etiquetas. Cada
+fila asocia un nombre de archivo de imagen con su clase correspondiente.
+Este CSV es necesario porque las imágenes están almacenadas de forma
+plana en <code>dataset/</code> sin subcarpetas por clase.</li>
+</ul>
+<h3 id="new_data.csv"><code>new_data.csv</code></h3>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 21%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td>string</td>
+<td>Nombre del archivo de imagen (ej: <code>Image_1.jpg</code>)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Filas:</strong> 5,400</li>
+<li><strong>Uso:</strong> Lista los nombres de las imágenes sin
+etiqueta. Originalmente pensado para generar predicciones en una
+competencia (Data Sprint 76). No contiene etiquetas.</li>
+</ul>
+<hr />
+<h2 id="cómo-ejecutar">▶️ 10. Cómo ejecutar</h2>
+<p>El análisis de este documento fue generado mediante el script
+<code>data_explore.py</code>. Para reproducirlo:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desde la raíz del proyecto (tp_ml/)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Activar el entorno virtual</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\har_ml_env\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Ejecutar el script de exploración</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>python data_prep<span class="op">/</span>data_explore<span class="op">.</span><span class="fu">py</span></span></code></pre></div>
+<p>El script realiza las siguientes acciones: 1. Carga el dataset desde
+<code>datos_har/</code> (lo descarga desde Kaggle si no existe) 2.
+Analiza la estructura de directorios y archivos CSV 3. Copia las
+imágenes de <code>new_data/</code> a <code>dataset/</code> para unificar
+el dataset 4. Calcula y grafica la distribución de clases con métricas
+de balance 5. Analiza tamaños, resoluciones y formatos de las imágenes
+6. Calcula estadísticas de canales RGB (media y desviación estándar) 7.
+Genera una grilla visual con muestras de cada clase</p>
+<p>Los gráficos generados se guardan en
+<code>data_prep/output/</code>.</p>
+<hr />
+<div data-align="center">
+<p><em>Documento generado como parte del proyecto de Machine Learning —
+Exploración del dataset HAR</em></p>
+</div>
+</body>
+</html>

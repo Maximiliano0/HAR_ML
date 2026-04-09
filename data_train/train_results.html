@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Resultados del Entrenamiento</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Resultados del Entrenamiento</h1>
+</header>
+<h1
+id="resultados-del-entrenamiento-convnext-base-transfer-learning-2-fases-swa-har">Resultados
+del Entrenamiento — ConvNeXt-Base Transfer Learning, 2 Fases + SWA
+(HAR)</h1>
+<p><img src="https://img.shields.io/badge/Imágenes-12510-blue"
+alt="Imágenes" /> <img
+src="https://img.shields.io/badge/Train-10008_(80%25)-green"
+alt="Train" /> <img
+src="https://img.shields.io/badge/Test-2502_(20%25)-orange"
+alt="Test" /> <img src="https://img.shields.io/badge/Clases-15-purple"
+alt="Clases" /> <img
+src="https://img.shields.io/badge/Accuracy-80.26%25-green"
+alt="Accuracy" /></p>
+<hr />
+<h2 id="índice">Índice</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Sección</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-objetivo">Objetivo</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-dataset">Dataset</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-arquitectura-del-modelo">Arquitectura del
+Modelo</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-hiperparámetros">Hiperparámetros</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-resultados">Resultados</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-curvas-de-entrenamiento">Curvas de
+Entrenamiento</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-matriz-de-confusión">Matriz de Confusión</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-reporte-de-clasificación">Reporte de
+Clasificación</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-análisis">Análisis</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="objetivo">1. Objetivo</h2>
+<p>Entrenar un modelo de clasificación de imágenes basado en
+<strong>transfer learning</strong> (ConvNeXt-Base pretrained en
+ImageNet) para el dataset HAR (Human Activity Recognition) con 15 clases
+de actividad humana. Se utiliza semilla fija (<code>SEED=42</code>) para
+reproducibilidad.</p>
+<h2 id="dataset">2. Dataset</h2>
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Imágenes totales</td>
+<td>12,510 (filtradas de dataset.csv presentes en dataset_tr/)</td>
+</tr>
+<tr>
+<td>Tamaño en disco</td>
+<td>288 × 384 px</td>
+</tr>
+<tr>
+<td>Preprocesamiento</td>
+<td>Resize → CLAHE (LAB) → RGB</td>
+</tr>
+<tr>
+<td>Canales</td>
+<td>3 (RGB)</td>
+</tr>
+<tr>
+<td>Tamaño de entrada al modelo</td>
+<td>384 × 288 px (sin doble resize)</td>
+</tr>
+<tr>
+<td>Split train/test</td>
+<td>80% / 20% (estratificado)</td>
+</tr>
+<tr>
+<td>Train</td>
+<td>10,008 imágenes</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>2,502 imágenes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Clases (15):</strong> calling, clapping, cycling, dancing,
+drinking, eating, fighting, hugging, laughing, listening_to_music,
+running, sitting, sleeping, texting, using_laptop.</p>
+<h2 id="arquitectura-del-modelo">3. Arquitectura del Modelo</h2>
+<pre><code>ConvNeXt-Base (Transfer Learning)
+  backbone: ConvNeXt-Base pretrained en ImageNet1K_V1
+    features[0]: Conv2d(3,128) + LN (stem)
+    features[1-4]: ConvNeXt blocks (capas tempranas/medias)
+    features[5-6]: ConvNeXt blocks (capas tardías)
+    avgpool: AdaptiveAvgPool2d(1,1)  [1024×1×1]
+  classifier (head custom):
+    Flatten → LayerNorm(1024) → Linear(1024→512) → BN → ReLU → Dropout(0.3) →
+    Linear(512→256) → BN → ReLU → Dropout(0.2) →
+    Linear(256→15)</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parámetros totales</td>
+<td>~88,000,000</td>
+</tr>
+<tr>
+<td>Fase 1 (head)</td>
+<td>~660,000 entrenables (backbone congelado)</td>
+</tr>
+<tr>
+<td>Fase 2 (completo)</td>
+<td>~88,000,000 entrenables</td>
+</tr>
+<tr>
+<td>Pesos pretrained</td>
+<td>ImageNet1K_V1</td>
+</tr>
+<tr>
+<td>Canal de entrada</td>
+<td>3 (RGB)</td>
+</tr>
+<tr>
+<td>Device</td>
+<td>CPU / GPU (Colab T4)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hiperparámetros">4. Hiperparámetros</h2>
+<table>
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>Hiperparámetro</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estrategia</td>
+<td>2 fases (head → progressive unfreezing) + SWA</td>
+</tr>
+<tr>
+<td>Fase 1 épocas</td>
+<td>15 (backbone congelado)</td>
+</tr>
+<tr>
+<td>Fase 2 épocas máx.</td>
+<td>100 (early stopping)</td>
+</tr>
+<tr>
+<td>Progressive unfreezing</td>
+<td>F2 épocas 1-10: features[5:7]+classifier; época 11+: todo</td>
+</tr>
+<tr>
+<td>Batch size</td>
+<td>64 (script y Colab)</td>
+</tr>
+<tr>
+<td>LR head</td>
+<td>1e-3</td>
+</tr>
+<tr>
+<td>LR backbone (fase 2)</td>
+<td>3e-5</td>
+</tr>
+<tr>
+<td>Weight decay</td>
+<td>5e-4</td>
+</tr>
+<tr>
+<td>Optimizador</td>
+<td>AdamW</td>
+</tr>
+<tr>
+<td>Scheduler (fase 2)</td>
+<td>SequentialLR (LinearLR warmup 10ep + CosineAnnealingLR)</td>
+</tr>
+<tr>
+<td>Early stopping</td>
+<td>Paciencia 15 épocas</td>
+</tr>
+<tr>
+<td>Loss</td>
+<td>Focal Loss (gamma=2.0, label_smoothing=0.02)</td>
+</tr>
+<tr>
+<td>Gradient clipping</td>
+<td>max_norm=1.0</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>0.3/0.2</td>
+</tr>
+<tr>
+<td>SWA</td>
+<td>Desde época 20 de F2 (lr=1e-5)</td>
+</tr>
+<tr>
+<td>TTA</td>
+<td>5 pasadas en evaluación</td>
+</tr>
+<tr>
+<td>Semilla</td>
+<td>42 (reproducibilidad completa)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reproducibilidad:</strong> - <code>random.seed(42)</code> —
+Python stdlib (usado internamente por torchvision) -
+<code>np.random.seed(42)</code> — NumPy -
+<code>torch.manual_seed(42)</code> — PyTorch CPU -
+<code>torch.cuda.manual_seed_all(42)</code> — PyTorch GPU (todas las
+GPUs) - <code>torch.backends.cudnn.deterministic = True</code> —
+operaciones cuDNN deterministas -
+<code>torch.backends.cudnn.benchmark = False</code> — desactiva
+autotuning no determinista -
+<code>torch.Generator().manual_seed(42)</code> — generador explícito
+para DataLoader shuffle - <code>worker_init_fn</code> con semilla
+<code>42 + worker_id</code> — cada worker del DataLoader tiene semilla
+propia - <code>random_state=42</code> en pandas <code>.sample()</code> —
+oversampling determinista en preprocesamiento</p>
+<p><strong>Data Augmentation (solo train):</strong> - Resize(384, 288) -
+RandomHorizontalFlip (p=0.5) - RandomRotation (20°) - ColorJitter
+(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.1) -
+TrivialAugmentWide() - RandomErasing (p=0.10) - Normalize ImageNet
+(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])</p>
+<blockquote>
+<p><strong>Nota Colab (<code>train_cnn_colab.ipynb</code>):</strong>
+batch_size=64, NUM_WORKERS=2, AMP (float16), torch.compile, pin_memory.
+Mismos hiperparámetros de modelo y augmentation.</p>
+</blockquote>
+<h2 id="resultados">5. Resultados</h2>
+<table>
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mejor Test Accuracy (época)</strong></td>
+<td><strong>79.82%</strong> (F2 época 11, global 26)</td>
+</tr>
+<tr>
+<td><strong>Accuracy final (TTA, 5 pasadas)</strong></td>
+<td><strong>80.26%</strong></td>
+</tr>
+<tr>
+<td><strong>Mejor Test Loss</strong></td>
+<td><strong>0.4528</strong></td>
+</tr>
+<tr>
+<td><strong>Épocas totales</strong></td>
+<td>41 (15 F1 + 26 F2)</td>
+</tr>
+<tr>
+<td><strong>Early stopping</strong></td>
+<td>F2 época 26 (15 épocas sin mejora)</td>
+</tr>
+<tr>
+<td><strong>Tiempo total</strong></td>
+<td>63.7 min (Google Colab, GPU T4)</td>
+</tr>
+<tr>
+<td><strong>SWA</strong></td>
+<td>Activo desde F2 época 20 (7 épocas de promediado)</td>
+</tr>
+<tr>
+<td><strong>Parámetros (head)</strong></td>
+<td>663,567</td>
+</tr>
+<tr>
+<td><strong>Parámetros (parcial F2)</strong></td>
+<td>60,187,663</td>
+</tr>
+<tr>
+<td><strong>Parámetros (completo F2)</strong></td>
+<td>88,227,983</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Progresión por fase:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Épocas</th>
+<th>Train Loss</th>
+<th>Train Acc</th>
+<th>Test Loss</th>
+<th>Test Acc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1 (head)</td>
+<td>15</td>
+<td>0.4592</td>
+<td>0.7633</td>
+<td>0.4906</td>
+<td>0.7786</td>
+</tr>
+<tr>
+<td>F2 parcial (ep 1-10)</td>
+<td>10</td>
+<td>0.3920</td>
+<td>0.7942</td>
+<td>0.4582</td>
+<td>0.7918</td>
+</tr>
+<tr>
+<td>F2 completo (ep 11-19)</td>
+<td>9</td>
+<td>0.3856</td>
+<td>0.7959</td>
+<td>0.4638</td>
+<td>0.7914</td>
+</tr>
+<tr>
+<td>F2 SWA (ep 20-26)</td>
+<td>7</td>
+<td>0.3773</td>
+<td>0.8050</td>
+<td>0.4604</td>
+<td>0.7942</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota:</strong> Los resultados de evaluación final (TTA, SWA
+model, classification report y matriz de confusión) se actualizarán
+cuando se complete la evaluación del modelo SWA.</p>
+</blockquote>
+<h2 id="curvas-de-entrenamiento">6. Curvas de Entrenamiento</h2>
+<figure>
+<img src="output/curvas_entrenamiento.png"
+alt="Curvas de entrenamiento" />
+<figcaption aria-hidden="true">Curvas de entrenamiento</figcaption>
+</figure>
+<h2 id="matriz-de-confusión">7. Matriz de Confusión</h2>
+<figure>
+<img src="output/matriz_confusion.png" alt="Matriz de confusión" />
+<figcaption aria-hidden="true">Matriz de confusión</figcaption>
+</figure>
+<h2 id="reporte-de-clasificación">8. Reporte de Clasificación</h2>
+<p>El classification report completo se encuentra en
+<code>data_train/output/metrics.json</code>. Las métricas clave por
+clase (precision, recall, F1-score) se calculan sobre el conjunto de
+test (2,502 imágenes) con TTA de 5 pasadas, alcanzando una
+<strong>accuracy global del 80.26%</strong>.</p>
+<blockquote>
+<p>Los resultados detallados por clase están disponibles en el archivo
+<code>metrics.json</code> generado automáticamente por
+<code>train_cnn.py</code>.</p>
+</blockquote>
+<h2 id="análisis">9. Análisis</h2>
+<p><strong>Configuración actual (ConvNeXt-Base Transfer Learning — 2
+fases + SWA):</strong></p>
+<ul>
+<li><strong>Transfer Learning</strong>: ConvNeXt-Base pretrained en
+ImageNet (IMAGENET1K_V1)</li>
+<li><strong>Entrenamiento en 2 fases</strong>: Fase 1 congela backbone y
+entrena solo el head → Fase 2 fine-tuning completo con LR
+diferencial</li>
+<li><strong>Head expresivo</strong>:
+Flatten→LN(1024)→Linear(1024→512)→BN→ReLU→Drop(0.3)→Linear(512→256)→BN→ReLU→Drop(0.2)→Linear(256→15)</li>
+<li><strong>Resolución</strong>: 384×288 guardada directamente en
+pipeline (sin doble resize)</li>
+<li><strong>Normalización ImageNet</strong>: mean/std alineados con los
+pesos pretrained</li>
+<li><strong>Progressive unfreezing</strong>: F2 épocas 1-10 solo
+features[5:7]+classifier; época 11+ todo</li>
+<li><strong>Augmentation</strong>: ColorJitter + TrivialAugmentWide +
+RandomErasing(0.10)</li>
+<li><strong>Focal Loss (gamma=2.0)</strong>: penaliza ejemplos fáciles
+para enfocarse en los difíciles</li>
+<li><strong>Label smoothing (0.02)</strong>: regularización suave
+conservadora</li>
+<li><strong>Gradient clipping (1.0)</strong>: estabilidad con AMP (mixed
+precision)</li>
+<li><strong>SWA</strong>: Stochastic Weight Averaging desde época 20 de
+F2, promedia pesos para mejor generalización</li>
+<li><strong>Regularización</strong>: Dropout 0.3/0.2, weight_decay
+5e-4</li>
+<li><strong>LR diferencial</strong>: backbone lr=3e-5, head lr=1e-3 (F1)
+/ 1e-4 (F2)</li>
+<li><strong>Warmup lineal</strong>: 10 épocas para estabilizar
+gradientes al descongelar backbone</li>
+<li><strong>Early stopping por loss</strong>: paciencia 15 épocas</li>
+<li><strong>TTA</strong>: Test-Time Augmentation con 5 pasadas
+promediando logits</li>
+<li><strong>Dataset</strong>: 12,570 imágenes RGB con CLAHE, balanceadas
+a 838/clase</li>
+</ul>
+</body>
+</html>

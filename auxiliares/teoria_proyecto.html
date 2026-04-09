@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Fundamentos Teóricos del Proyecto HAR</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Fundamentos Teóricos del Proyecto HAR</h1>
+</header>
+<section id="fundamentos-teóricos-del-proyecto-har" data-align="center">
+<h1>📚 Fundamentos Teóricos del Proyecto HAR</h1>
+<h3
+id="human-action-recognition-clasificación-de-imágenes-con-deep-learning">Human
+Action Recognition — Clasificación de Imágenes con Deep Learning</h3>
+<p><a href=""><img
+src="https://img.shields.io/badge/Transfer_Learning-ConvNeXt--Base-blue"
+alt="Transfer Learning" /></a> <a href=""><img
+src="https://img.shields.io/badge/Loss-Focal_Loss-red" alt="Loss" /></a>
+<a href=""><img
+src="https://img.shields.io/badge/SWA-Stochastic_Weight_Averaging-green"
+alt="SWA" /></a> <a href=""><img
+src="https://img.shields.io/badge/TTA-Test--Time_Augmentation-orange"
+alt="TTA" /></a></p>
+</section>
+<hr />
+<h2 id="índice">📑 Índice</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 36%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>Sección</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><a href="#1-introducción">Introducción</a></td>
+<td>Contexto y objetivo del proyecto</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><a href="#2-exploración-de-datos-data_prep">Exploración de
+Datos</a></td>
+<td>Análisis exploratorio y estadísticas</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><a href="#3-pipeline-de-preprocesamiento-data_trans">Pipeline de
+Preprocesamiento</a></td>
+<td>CLAHE, resize, oversampling</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><a href="#4-arquitectura-del-modelo">Arquitectura del
+Modelo</a></td>
+<td>ConvNeXt-Base y head custom</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><a href="#5-transfer-learning">Transfer Learning</a></td>
+<td>Fundamentos y aplicación</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><a href="#6-progressive-unfreezing">Progressive Unfreezing</a></td>
+<td>Descongelamiento gradual</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><a href="#7-función-de-pérdida-focal-loss">Función de Pérdida: Focal
+Loss</a></td>
+<td>Penalización de ejemplos fáciles</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><a href="#8-regularización">Regularización</a></td>
+<td>Dropout, weight decay, label smoothing, gradient clipping</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td><a href="#9-data-augmentation">Data Augmentation</a></td>
+<td>Augmentación de datos en entrenamiento</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td><a href="#10-optimización-adamw-y-schedulers">Optimización: AdamW y
+Schedulers</a></td>
+<td>Optimizador y programación de LR</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td><a href="#11-stochastic-weight-averaging-swa">Stochastic Weight
+Averaging (SWA)</a></td>
+<td>Promediado de pesos</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td><a href="#12-mixed-precision-training-amp">Mixed Precision Training
+(AMP)</a></td>
+<td>Entrenamiento en precisión mixta</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td><a href="#13-test-time-augmentation-tta">Test-Time Augmentation
+(TTA)</a></td>
+<td>Augmentación en inferencia</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td><a href="#14-métricas-de-evaluación">Métricas de Evaluación</a></td>
+<td>Accuracy, precision, recall, F1, matriz de confusión</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td><a href="#15-reproducibilidad">Reproducibilidad</a></td>
+<td>Semillas y determinismo</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td><a href="#16-referencias">Referencias</a></td>
+<td>Bibliografía en formato APA</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="introducción">1. Introducción</h2>
+<p>El presente proyecto aborda el problema de <strong>Human Action
+Recognition (HAR)</strong> mediante técnicas de <strong>visión por
+computadora</strong> y <strong>deep learning</strong>. El objetivo es
+clasificar imágenes de personas realizando 15 actividades humanas
+distintas (llamar, aplaudir, correr, dormir, etc.) utilizando una red
+neuronal convolucional basada en <strong>transfer learning</strong>.</p>
+<p>El flujo del proyecto sigue tres etapas secuenciales:</p>
+<ol type="1">
+<li><strong>Exploración de datos</strong> (<code>data_prep/</code>):
+Análisis estadístico del dataset, distribución de clases, resoluciones y
+canales de color.</li>
+<li><strong>Preprocesamiento</strong> (<code>data_trans/</code>):
+Normalización de resolución, mejora de contraste (CLAHE) y balanceo de
+clases.</li>
+<li><strong>Entrenamiento</strong> (<code>data_train/</code>): Transfer
+learning con ConvNeXt-Base, fine-tuning progresivo, SWA y evaluación con
+TTA.</li>
+</ol>
+<p>La clasificación de acciones humanas a partir de imágenes estáticas
+es un problema desafiante porque requiere que el modelo capture patrones
+posturales, contexto espacial e interacción con objetos. A diferencia
+del reconocimiento de acciones en video (que aprovecha información
+temporal), las imágenes estáticas contienen una única instantánea, lo
+que exige representaciones visuales ricas (Poppe, 2010).</p>
+<hr />
+<h2 id="exploración-de-datos-data_prep">2. Exploración de Datos
+(<code>data_prep/</code>)</h2>
+<h3 id="análisis-exploratorio-de-datos-eda">2.1 Análisis Exploratorio de
+Datos (EDA)</h3>
+<p>El Análisis Exploratorio de Datos (Exploratory Data Analysis, EDA) es
+una etapa fundamental en cualquier proyecto de Machine Learning. Fue
+formalizado por Tukey (1977) como un enfoque para analizar conjuntos de
+datos con el fin de resumir sus características principales,
+frecuentemente mediante métodos visuales.</p>
+<p>En este proyecto, el EDA se realiza en <code>data_explore.py</code> y
+abarca:</p>
+<ul>
+<li><strong>Distribución de clases</strong>: Verificar el balance entre
+las 15 actividades.</li>
+<li><strong>Análisis de resoluciones</strong>: Identificar la
+variabilidad de tamaños para definir el resize objetivo.</li>
+<li><strong>Estadísticas de canales RGB</strong>: Calcular media y
+desviación estándar para futuras normalizaciones.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_prep/data_explore.py — Estadísticas de canales RGB</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>channel_sums <span class="op">+=</span> arr.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>channel_sq_sums <span class="op">+=</span> (arr.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pixel_count <span class="op">+=</span> npixels</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mean_rgb <span class="op">=</span> channel_sums <span class="op">/</span> pixel_count</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>std_rgb <span class="op">=</span> np.sqrt(channel_sq_sums <span class="op">/</span> pixel_count <span class="op">-</span> mean_rgb <span class="op">**</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>El cálculo de media y varianza en un solo pase (Welford, 1962) evita
+almacenar todas las imágenes en memoria, lo que es esencial para
+datasets grandes.</p>
+<h3 id="balance-de-clases">2.2 Balance de Clases</h3>
+<p>El dataset HAR está <strong>perfectamente balanceado</strong> (840
+imágenes por clase). Un dataset balanceado permite usar accuracy como
+métrica principal sin sesgo hacia clases mayoritarias (He &amp; Garcia,
+2009). No obstante, tras el filtrado por tamaño mínimo, algunas clases
+pierden imágenes, lo que se corrige con oversampling en la etapa de
+preprocesamiento.</p>
+<hr />
+<h2 id="pipeline-de-preprocesamiento-data_trans">3. Pipeline de
+Preprocesamiento (<code>data_trans/</code>)</h2>
+<h3 id="clahe-contrast-limited-adaptive-histogram-equalization">3.1
+CLAHE (Contrast Limited Adaptive Histogram Equalization)</h3>
+<p>CLAHE es una variante de la ecualización adaptativa de histograma
+propuesta por Zuiderveld (1994). A diferencia de la ecualización global,
+CLAHE opera sobre regiones locales (<em>tiles</em>) de la imagen y
+limita la amplificación del contraste mediante un parámetro
+<code>clipLimit</code>, evitando la amplificación excesiva de ruido.</p>
+<p><strong>Principio de funcionamiento:</strong></p>
+<ol type="1">
+<li>La imagen se divide en regiones rectangulares (parámetro
+<code>tileGridSize</code>).</li>
+<li>En cada región se calcula el histograma local.</li>
+<li>Se aplica un límite de recorte (<em>clip limit</em>) que
+redistribuye los bins que exceden el umbral.</li>
+<li>Se interpola bilinealmente entre regiones vecinas para evitar bordes
+visibles.</li>
+</ol>
+<p><strong>Marco matemático:</strong></p>
+<p>La ecualización de histograma clásica define una función de
+transferencia <span class="math inline">\(T(r)\)</span> que mapea los
+niveles de intensidad originales <span class="math inline">\(r\)</span>
+a nuevos valores uniformemente distribuidos:</p>
+<p><span class="math display">\[T(r) = (L - 1) \int_0^r p_r(w) \,
+dw\]</span></p>
+<p>donde <span class="math inline">\(L\)</span> es el número de niveles
+de gris (256 para imágenes de 8 bits) y <span
+class="math inline">\(p_r(w)\)</span> es la función de densidad de
+probabilidad de la intensidad <span
+class="math inline">\(w\)</span>.</p>
+<p>En CLAHE, el paso central es el <strong>recorte del
+histograma</strong> (<em>clipping</em>). Dado un histograma local <span
+class="math inline">\(h(i)\)</span> con <span
+class="math inline">\(N_{\text{pixels}}\)</span> píxeles y <span
+class="math inline">\(N_{\text{bins}}\)</span> bins, el límite de
+recorte <span class="math inline">\(\beta\)</span> se calcula como:</p>
+<p><span class="math display">\[\beta =
+\frac{N_{\text{pixels}}}{N_{\text{bins}}} \cdot \alpha\]</span></p>
+<p>donde <span class="math inline">\(\alpha\)</span> es el parámetro
+<code>clipLimit</code> (en este proyecto, <span
+class="math inline">\(\alpha = 2.0\)</span>). Los bins que superan <span
+class="math inline">\(\beta\)</span> se recortan y los píxeles sobrantes
+se redistribuyen uniformemente:</p>
+<p><span class="math display">\[h&#39;(i) = \begin{cases} \beta &amp;
+\text{si } h(i) &gt; \beta \\ h(i) + \Delta &amp; \text{en caso
+contrario} \end{cases} \quad \text{con } \Delta = \frac{\sum_{j:\,
+h(j)&gt;\beta} \bigl(h(j) - \beta\bigr)}{N_{\text{bins}}}\]</span></p>
+<p><strong>Ejemplo numérico:</strong> Para una región (<em>tile</em>) de
+32×32 = 1,024 píxeles con 256 bins y <code>clipLimit=2.0</code>: -
+Promedio por bin: <span class="math inline">\(1024 / 256 = 4\)</span>
+píxeles - Límite de recorte: <span class="math inline">\(\beta = 4
+\times 2.0 = 8\)</span> píxeles - Un bin con 12 píxeles se recorta a 8;
+los 4 sobrantes se redistribuyen entre los demás bins</p>
+<p>En este proyecto, CLAHE se aplica sobre el <strong>canal L</strong>
+(luminancia) del espacio de color <strong>LAB</strong>, lo que mejora el
+contraste local sin alterar la información cromática:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_trans/data_adecuate.py — Aplicación de CLAHE en espacio LAB</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>clahe <span class="op">=</span> cv2.createCLAHE(clipLimit<span class="op">=</span><span class="fl">2.0</span>, tileGridSize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>img_lab <span class="op">=</span> cv2.cvtColor(img_resized, cv2.COLOR_BGR2LAB)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>l_channel, a_channel, b_channel <span class="op">=</span> cv2.split(img_lab)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>l_channel <span class="op">=</span> clahe.<span class="bu">apply</span>(l_channel)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>img_lab <span class="op">=</span> cv2.merge([l_channel, a_channel, b_channel])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>img_clahe <span class="op">=</span> cv2.cvtColor(img_lab, cv2.COLOR_LAB2BGR)</span></code></pre></div>
+<p><strong>¿Por qué LAB y no RGB directo?</strong> El espacio CIE L*a*b*
+separa la luminancia (L) de la crominancia (a, b). La conversión desde
+RGB requiere un paso intermedio por el espacio XYZ:</p>
+<p><span class="math display">\[\begin{bmatrix} X \\ Y \\ Z
+\end{bmatrix} = M_{\text{sRGB}} \cdot \begin{bmatrix} R&#39; \\ G&#39;
+\\ B&#39; \end{bmatrix}, \qquad L^* = 116 \cdot
+f\!\left(\frac{Y}{Y_n}\right) - 16\]</span></p>
+<p>donde <span class="math inline">\(f(t) = t^{1/3}\)</span> si <span
+class="math inline">\(t &gt; \delta^3\)</span>, y <span
+class="math inline">\(f(t) = \frac{t}{3\delta^2} + \frac{4}{29}\)</span>
+si <span class="math inline">\(t \leq \delta^3\)</span> (con <span
+class="math inline">\(\delta = 6/29\)</span>). Los canales <span
+class="math inline">\(a^*\)</span> y <span
+class="math inline">\(b^*\)</span> codifican la oposición verde-rojo y
+azul-amarillo respectivamente.</p>
+<p>Aplicar CLAHE en RGB modificaría cada canal de color
+independientemente, generando <strong>artefactos cromáticos</strong>
+(desaturación, falsos colores). En cambio, operar solo sobre el canal L
+preserva los colores originales mientras mejora el detalle en zonas
+oscuras y claras (Reza, 2004).</p>
+<h3 id="interpolación-adaptativa-para-resize">3.2 Interpolación
+Adaptativa para Resize</h3>
+<p>El redimensionado utiliza interpolación adaptativa según la dirección
+del cambio:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_trans/data_adecuate.py — Interpolación adaptativa</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>needs_upscale <span class="op">=</span> (w_orig <span class="op">&lt;</span> TARGET_W) <span class="kw">or</span> (h_orig <span class="op">&lt;</span> TARGET_H)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>interp <span class="op">=</span> cv2.INTER_CUBIC <span class="cf">if</span> needs_upscale <span class="cf">else</span> cv2.INTER_AREA</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>img_resized <span class="op">=</span> cv2.resize(img_bgr, (TARGET_W, TARGET_H), interpolation<span class="op">=</span>interp)</span></code></pre></div>
+<ul>
+<li><strong><code>INTER_AREA</code></strong> (downscale): Usa media
+ponderada de píxeles vecinos. Superior a bilinear para reducción porque
+evita aliasing (OpenCV, 2024).</li>
+<li><strong><code>INTER_CUBIC</code></strong> (upscale): Interpolación
+bicúbica de 4×4 píxeles vecinos. Produce resultados más suaves que la
+bilinear para ampliación.</li>
+</ul>
+<h3 id="oversampling-con-reemplazo">3.3 Oversampling con Reemplazo</h3>
+<p>Tras el filtrado por tamaño mínimo (128×128), las clases quedan
+ligeramente desbalanceadas. Se aplica <strong>random oversampling con
+reemplazo</strong> (Chawla et al., 2002) para igualar todas las clases a
+la más numerosa (838 imágenes):</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_trans/data_adecuate.py — Oversampling por clase</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, group <span class="kw">in</span> df_valid.groupby(<span class="st">&quot;label&quot;</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(group)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&gt;=</span> max_count:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        balanced_parts.append(group.sample(n<span class="op">=</span>max_count, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        extra <span class="op">=</span> group.sample(n<span class="op">=</span>max_count <span class="op">-</span> n, replace<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        balanced_parts.append(pd.concat([group, extra], ignore_index<span class="op">=</span><span class="va">True</span>))</span></code></pre></div>
+<p>El oversampling con reemplazo duplica imágenes existentes de las
+clases minoritarias. Aunque no genera datos nuevos (a diferencia de
+SMOTE), combinado con data augmentation en entrenamiento, las copias se
+transforman en variantes únicas en cada época.</p>
+<hr />
+<h2 id="arquitectura-del-modelo">4. Arquitectura del Modelo</h2>
+<p>Las redes neuronales convolucionales (CNN) son la base de la visión
+por computadora moderna. La operación fundamental es la
+<strong>convolución discreta 2D</strong>: dado un kernel <span
+class="math inline">\(K\)</span> de tamaño <span class="math inline">\(k
+\times k\)</span> y una imagen de entrada <span
+class="math inline">\(I\)</span>, la salida (<em>feature map</em>) en la
+posición <span class="math inline">\((i, j)\)</span> es:</p>
+<p><span class="math display">\[S(i, j) = (I * K)(i, j) =
+\sum_{m=0}^{k-1} \sum_{n=0}^{k-1} I(i+m, j+n) \cdot K(m, n)\]</span></p>
+<p>Una CNN típica apila múltiples capas convolucionales con funciones de
+activación no lineales y operaciones de pooling, aprendiendo
+representaciones jerárquicas: las primeras capas detectan bordes y
+texturas, las intermedias capturan partes de objetos, y las finales
+reconocen patrones semánticos de alto nivel (Zeiler &amp; Fergus,
+2014).</p>
+<h3 id="convnext-modernizando-las-convnets">4.1 ConvNeXt: Modernizando
+las ConvNets</h3>
+<p>ConvNeXt (Liu et al., 2022) es una familia de redes convolucionales
+puras diseñada para competir directamente con los Vision Transformers
+(ViT). Los autores partieron de una ResNet-50 estándar y la
+“modernizaron” sistemáticamente incorporando principios de diseño de los
+Transformers:</p>
+<ol type="1">
+<li><strong>Macro design</strong>: Ratio de stages 3:3:9:3 (similar a
+Swin Transformer).</li>
+<li><strong>Patchify stem</strong>: Conv 4×4 stride 4 en la entrada
+(reemplaza stem agresivo de ResNet).</li>
+<li><strong>Depthwise separable convolutions</strong>: Convs 7×7
+depthwise (análogo a attention local de Swin).</li>
+<li><strong>Inverted bottleneck</strong>: Canal ancho → estrecho → ancho
+(como en MobileNetV2/Transformers).</li>
+<li><strong>Layer normalization</strong>: Reemplaza BatchNorm en el
+backbone.</li>
+<li><strong>GELU activation</strong>: Reemplaza ReLU. GELU (<em>Gaussian
+Error Linear Unit</em>): <span class="math inline">\(\text{GELU}(x) = x
+\cdot \Phi(x)\)</span>, donde <span class="math inline">\(\Phi\)</span>
+es la CDF de la distribución normal estándar. A diferencia de ReLU, GELU
+es diferenciable en todo su dominio y pondera la activación por la
+probabilidad de que la entrada sea positiva.</li>
+<li><strong>Fewer activation/norm layers</strong>: Menos operaciones por
+bloque (como Transformers).</li>
+</ol>
+<p><strong>ConvNeXt-Base</strong> tiene ~88M parámetros y alcanza 83.8%
+top-1 accuracy en ImageNet-1K, comparable a Swin-B (83.5%) pero con la
+simplicidad arquitectural de una ConvNet pura (Liu et al., 2022).</p>
+<h3 id="head-personalizado-clasificador">4.2 Head Personalizado
+(Clasificador)</h3>
+<p>El clasificador original de ConvNeXt
+(<code>LayerNorm → Flatten → Linear(1024, 1000)</code>) se reemplaza por
+un head multicapa con mayor capacidad expresiva:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Head personalizado</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model.classifier <span class="op">=</span> nn.Sequential(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    nn.Flatten(<span class="dv">1</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nn.LayerNorm(<span class="dv">1024</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">1024</span>, <span class="dv">512</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    nn.BatchNorm1d(<span class="dv">512</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    nn.Dropout(<span class="fl">0.3</span>),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">512</span>, <span class="dv">256</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    nn.BatchNorm1d(<span class="dv">256</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    nn.Dropout(<span class="fl">0.2</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">256</span>, <span class="dv">15</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><strong>Diseño del head:</strong></p>
+<ul>
+<li><strong>LayerNorm(1024)</strong>: Normaliza las features del
+backbone, estabilizando la distribución de entrada al head.</li>
+<li><strong>Reducción progresiva</strong> (1024 → 512 → 256 → 15):
+Permite al modelo aprender representaciones intermedias entre las
+features generales de ImageNet y las clases específicas de HAR.</li>
+<li><strong>BatchNorm1d después de cada Linear</strong>: Normaliza las
+activaciones por mini-batch, acelerando la convergencia (Ioffe &amp;
+Szegedy, 2015). Para cada mini-batch <span
+class="math inline">\(\mathcal{B}\)</span>: <span
+class="math inline">\(\hat{x}_i = (x_i - \mu_{\mathcal{B}}) /
+\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}\)</span>, seguido de una
+transformación afín aprendible <span class="math inline">\(y_i = \gamma
+\hat{x}_i + \beta\)</span> que preserva la capacidad representacional de
+la capa.</li>
+<li><strong>ReLU</strong>: Función de activación no lineal <span
+class="math inline">\(f(x) = \max(0, x)\)</span>, computacionalmente
+eficiente (Nair &amp; Hinton, 2010).</li>
+<li><strong>Dropout decreciente</strong> (0.3 → 0.2): Mayor
+regularización en capas anchas (más propensas a memorizar).</li>
+</ul>
+<hr />
+<h2 id="transfer-learning">5. Transfer Learning</h2>
+<h3 id="fundamento-teórico">5.1 Fundamento Teórico</h3>
+<p>Transfer learning consiste en reutilizar un modelo entrenado en una
+tarea fuente (ej. ImageNet, 1.28M imágenes, 1000 clases) y adaptarlo a
+una tarea objetivo con menos datos (Yosinski et al., 2014). Las features
+aprendidas en capas tempranas (bordes, texturas, patrones) son
+<strong>transferibles</strong> entre dominios visuales, mientras que las
+capas tardías se especializan progresivamente.</p>
+<p><strong>¿Por qué funciona?</strong> Las capas convolucionales
+tempranas aprenden filtros genéricos (detectores de bordes tipo Gabor,
+blobs de color) que son universales. Las capas intermedias capturan
+texturas y parts. Solo las capas finales se especializan en las clases
+del dataset original (Zeiler &amp; Fergus, 2014). Al transferir estos
+conocimientos, el modelo necesita muchos menos datos para converger.</p>
+<h3 id="estrategia-de-dos-fases">5.2 Estrategia de Dos Fases</h3>
+<p>El entrenamiento se divide en dos fases para maximizar la estabilidad
+de transfer learning:</p>
+<p><strong>Fase 1 — Entrenar solo el head (backbone
+congelado):</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Congelamiento del backbone</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, param <span class="kw">in</span> model.named_parameters():</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> name.startswith(<span class="st">&quot;classifier&quot;</span>):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        param.requires_grad <span class="op">=</span> <span class="va">False</span></span></code></pre></div>
+<p>Se entrenan solo los ~660K parámetros del head durante 15 épocas.
+Esto permite que las capas de clasificación aprendan a mapear las
+features de ImageNet a las 15 clases de HAR sin perturbar las
+representaciones del backbone.</p>
+<p><strong>Fase 2 — Fine-tuning progresivo:</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Descongelamiento progresivo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, param <span class="kw">in</span> model.named_parameters():</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name.startswith((<span class="st">&quot;features.5.&quot;</span>, <span class="st">&quot;features.6.&quot;</span>, <span class="st">&quot;classifier.&quot;</span>)):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        param.requires_grad <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        param.requires_grad <span class="op">=</span> <span class="va">False</span></span></code></pre></div>
+<p>Se descongelan gradualmente más capas del backbone, permitiendo que
+las features se adapten al dominio HAR. Se usa un <strong>learning rate
+diferencial</strong>: menor para el backbone (3e-5) y mayor para el head
+(1e-4), evitando que el fine-tuning destruya las features
+pretrained.</p>
+<hr />
+<h2 id="progressive-unfreezing">6. Progressive Unfreezing</h2>
+<h3 id="concepto">6.1 Concepto</h3>
+<p>Progressive unfreezing, propuesto por Howard &amp; Ruder (2018) en el
+contexto de ULMFiT, consiste en descongelar las capas del modelo
+gradualmente, de las más externas (cercanas a la salida) a las más
+internas (cercanas a la entrada).</p>
+<p><strong>Justificación:</strong> Las capas tempranas contienen
+features más genéricas y transferibles. Si se descongelan de golpe con
+un learning rate alto, sus pesos se pueden degradar (“catastrophic
+forgetting”). El descongelamiento gradual permite a cada capa adaptarse
+antes de que la siguiente se active.</p>
+<h3 id="implementación">6.2 Implementación</h3>
+<p>En este proyecto, la progresión es:</p>
+<table>
+<thead>
+<tr>
+<th>Épocas F2</th>
+<th>Capas entrenables</th>
+<th>Parámetros</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–10</td>
+<td><code>features[5:7]</code> + <code>classifier</code></td>
+<td>~60M</td>
+</tr>
+<tr>
+<td>11+</td>
+<td>Todo el backbone + <code>classifier</code></td>
+<td>~88M</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Descongelamiento total</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> epoch <span class="op">==</span> UNFREEZE_AFTER <span class="op">+</span> <span class="dv">1</span>:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> param <span class="kw">in</span> model.parameters():</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        param.requires_grad <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    optimizer2, scheduler2 <span class="op">=</span> _build_optimizer_and_scheduler(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        model, last_epoch<span class="op">=</span>epoch <span class="op">-</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>Las capas <code>features[5:7]</code> corresponden a los dos últimos
+stages de ConvNeXt-Base, que contienen features más especializadas y son
+las primeras candidatas para adaptación al dominio HAR.</p>
+<hr />
+<h2 id="función-de-pérdida-focal-loss">7. Función de Pérdida: Focal
+Loss</h2>
+<h3 id="motivación">7.1 Motivación</h3>
+<p>La Cross-Entropy estándar trata todos los ejemplos por igual. En
+problemas de clasificación, muchos ejemplos son “fáciles” (el modelo ya
+los clasifica correctamente con alta confianza). Estos ejemplos dominan
+el gradiente y limitan el aprendizaje de los ejemplos difíciles.</p>
+<h3 id="definición-matemática">7.2 Definición Matemática</h3>
+<p><strong>Softmax y Cross-Entropy (preliminares):</strong></p>
+<p>La función <strong>softmax</strong> convierte los logits <span
+class="math inline">\(z_k\)</span> (salida cruda de la red) en una
+distribución de probabilidad sobre las <span
+class="math inline">\(K\)</span> clases:</p>
+<p><span class="math display">\[\sigma(z_k) =
+\frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}, \quad \text{con } \sum_{k=1}^{K}
+\sigma(z_k) = 1\]</span></p>
+<p>La <strong>Cross-Entropy Loss</strong> mide la discrepancia entre la
+distribución predicha <span class="math inline">\(\hat{y}\)</span> y la
+etiqueta real (one-hot vector <span
+class="math inline">\(y\)</span>):</p>
+<p><span class="math display">\[\text{CE}(y, \hat{y}) = -\sum_{k=1}^{K}
+y_k \log(\hat{y}_k) = -\log(p_c)\]</span></p>
+<p>donde <span class="math inline">\(p_c\)</span> es la probabilidad
+asignada a la clase correcta <span class="math inline">\(c\)</span>.
+Definimos <span class="math inline">\(p_t \equiv p_c\)</span> como la
+<strong>probabilidad de la clase verdadera</strong> — es la cantidad
+central en Focal Loss.</p>
+<p><strong>Focal Loss:</strong></p>
+<p>Focal Loss fue propuesta por Lin et al. (2017) para detección de
+objetos desbalanceada, pero se generaliza a cualquier clasificación:</p>
+<p><span class="math display">\[FL(p_t) = -(1 - p_t)^\gamma
+\log(p_t)\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(p_t\)</span> es la probabilidad predicha
+para la clase correcta.</li>
+<li><span class="math inline">\(\gamma\)</span> es el parámetro de
+<em>focusing</em> (en este proyecto, <span class="math inline">\(\gamma
+= 2.0\)</span>).</li>
+</ul>
+<p>Cuando <span class="math inline">\(\gamma = 0\)</span>, Focal Loss se
+reduce a Cross-Entropy. A medida que <span
+class="math inline">\(\gamma\)</span> aumenta, la contribución de los
+ejemplos bien clasificados (<span class="math inline">\(p_t \to
+1\)</span>) se reduce exponencialmente:</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(p_t\)</span></th>
+<th>CE Loss</th>
+<th>Focal Loss (<span class="math inline">\(\gamma=2\)</span>)</th>
+<th>Reducción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.9</td>
+<td>0.105</td>
+<td>0.001</td>
+<td>99%</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.693</td>
+<td>0.173</td>
+<td>75%</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>2.303</td>
+<td>1.867</td>
+<td>19%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo numérico detallado:</strong> Supongamos un mini-batch
+de 3 imágenes con <span class="math inline">\(\gamma = 2.0\)</span>:</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 13%" />
+<col style="width: 8%" />
+<col style="width: 22%" />
+<col style="width: 32%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>Imagen</th>
+<th>Clase real</th>
+<th><span class="math inline">\(p_t\)</span></th>
+<th>CE: <span class="math inline">\(-\log(p_t)\)</span></th>
+<th>Factor focal: <span class="math inline">\((1-p_t)^2\)</span></th>
+<th>Focal Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Img 1</td>
+<td>cycling</td>
+<td>0.95</td>
+<td>0.051</td>
+<td>0.0025</td>
+<td>0.00013</td>
+</tr>
+<tr>
+<td>Img 2</td>
+<td>dancing</td>
+<td>0.60</td>
+<td>0.511</td>
+<td>0.1600</td>
+<td>0.08170</td>
+</tr>
+<tr>
+<td>Img 3</td>
+<td>fighting</td>
+<td>0.15</td>
+<td>1.897</td>
+<td>0.7225</td>
+<td>1.37058</td>
+</tr>
+</tbody>
+</table>
+<p>La Img 1 (fácil, <span class="math inline">\(p_t = 0.95\)</span>)
+contribuye <strong>0.00013</strong> al loss — prácticamente nada. La Img
+3 (difícil, <span class="math inline">\(p_t = 0.15\)</span>) contribuye
+<strong>1.37</strong> — unas 10,000 veces más. Esto fuerza al modelo a
+concentrar su capacidad de aprendizaje en los ejemplos que aún no
+clasifica bien, acelerando la convergencia en clases difíciles.</p>
+<h3 id="implementación-1">7.3 Implementación</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Focal Loss</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FocalLoss(nn.Module):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, gamma<span class="op">=</span><span class="fl">2.0</span>, label_smoothing<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.gamma <span class="op">=</span> gamma</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ce <span class="op">=</span> nn.CrossEntropyLoss(label_smoothing<span class="op">=</span>label_smoothing, reduction<span class="op">=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, inputs, targets):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        ce_loss <span class="op">=</span> <span class="va">self</span>.ce(inputs, targets)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        pt <span class="op">=</span> torch.exp(<span class="op">-</span>ce_loss)           <span class="co"># p_t = exp(-CE) = probabilidad de la clase correcta</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        focal_loss <span class="op">=</span> ((<span class="dv">1</span> <span class="op">-</span> pt) <span class="op">**</span> <span class="va">self</span>.gamma) <span class="op">*</span> ce_loss</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> focal_loss.mean()</span></code></pre></div>
+<p>Se usa <code>reduction="none"</code> en <code>CrossEntropyLoss</code>
+para obtener la pérdida por ejemplo y luego aplicar la modulación focal
+individualmente.</p>
+<hr />
+<h2 id="regularización">8. Regularización</h2>
+<p>La regularización previene el sobreajuste (overfitting), que ocurre
+cuando el modelo memoriza los datos de entrenamiento en lugar de
+aprender patrones generalizables (Goodfellow et al., 2016, Cap. 7).</p>
+<h3 id="dropout">8.1 Dropout</h3>
+<p>Dropout (Srivastava et al., 2014) desactiva aleatoriamente un
+porcentaje de neuronas durante el entrenamiento, forzando al modelo a no
+depender de ninguna neurona individual:</p>
+<p><span class="math display">\[\tilde{h}_i = m_i \cdot h_i, \quad m_i
+\sim \text{Bernoulli}(1 - p)\]</span></p>
+<p>En el head se usan tasas decrecientes (0.3 → 0.2) porque las capas
+más anchas tienen mayor riesgo de memorización.</p>
+<h3 id="weight-decay-regularización-l2">8.2 Weight Decay (Regularización
+L2)</h3>
+<p>Weight decay penaliza pesos grandes añadiendo un término a la función
+de pérdida (Krogh &amp; Hertz, 1991):</p>
+<p><span class="math display">\[\mathcal{L}_{total} = \mathcal{L}_{task}
++ \frac{\lambda}{2} \sum_i w_i^2\]</span></p>
+<p>Con AdamW, el weight decay se aplica de forma
+<strong>desacoplada</strong> del gradiente (Loshchilov &amp; Hutter,
+2019), lo que es crucial para la correcta regularización con
+optimizadores adaptativos:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — AdamW con weight decay desacoplado</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.AdamW([</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;params&quot;</span>: backbone_p, <span class="st">&quot;lr&quot;</span>: LR_BACKBONE},</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;params&quot;</span>: model.classifier.parameters(), <span class="st">&quot;lr&quot;</span>: LR_HEAD_PHASE2},</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>], weight_decay<span class="op">=</span>WEIGHT_DECAY)  <span class="co"># WEIGHT_DECAY = 5e-4</span></span></code></pre></div>
+<h3 id="label-smoothing">8.3 Label Smoothing</h3>
+<p>Label smoothing (Szegedy et al., 2016) suaviza las etiquetas one-hot,
+distribuyendo una pequeña probabilidad (<span
+class="math inline">\(\epsilon\)</span>) entre todas las clases:</p>
+<p><span class="math display">\[y&#39;_k = (1 - \epsilon) \cdot y_k +
+\frac{\epsilon}{K}\]</span></p>
+<p>Con <span class="math inline">\(\epsilon = 0.02\)</span> y <span
+class="math inline">\(K = 15\)</span> clases, la clase correcta recibe
+probabilidad 0.9813 en vez de 1.0, y cada clase incorrecta recibe
+0.0013. Esto previene que el modelo se vuelva “sobreconfiado” y mejora
+la calibración de probabilidades (Müller et al., 2019).</p>
+<h3 id="gradient-clipping">8.4 Gradient Clipping</h3>
+<p>Gradient clipping limita la norma del gradiente para evitar
+explosiones que desestabilizan el entrenamiento (Pascanu et al., 2013),
+especialmente relevante con AMP donde los gradientes pueden tener mayor
+varianza:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Gradient clipping</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm<span class="op">=</span><span class="fl">1.0</span>)</span></code></pre></div>
+<p>Si <span class="math inline">\(\|g\| &gt; \text{max\_norm}\)</span>,
+el gradiente se escala: <span class="math inline">\(g&#39; = g \cdot
+\frac{\text{max\_norm}}{\|g\|}\)</span></p>
+<hr />
+<h2 id="data-augmentation">9. Data Augmentation</h2>
+<h3 id="fundamento">9.1 Fundamento</h3>
+<p>Data augmentation genera variantes artificiales de los datos de
+entrenamiento aplicando transformaciones que preservan la semántica de
+la etiqueta (Shorten &amp; Khoshgoftaar, 2019). Esto actúa como
+regularización implícita y aumenta virtualmente el tamaño del
+dataset.</p>
+<h3 id="transformaciones-aplicadas">9.2 Transformaciones Aplicadas</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Pipeline de augmentación</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>train_transform <span class="op">=</span> transforms.Compose([</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    transforms.ToPILImage(),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    transforms.Resize((IMG_H, IMG_W)),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    transforms.RandomHorizontalFlip(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    transforms.RandomRotation(<span class="dv">20</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    transforms.ColorJitter(brightness<span class="op">=</span><span class="fl">0.3</span>, contrast<span class="op">=</span><span class="fl">0.3</span>, saturation<span class="op">=</span><span class="fl">0.3</span>, hue<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    transforms.TrivialAugmentWide(),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor(),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    transforms.Normalize(mean<span class="op">=</span>IMAGENET_MEAN, std<span class="op">=</span>IMAGENET_STD),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    transforms.RandomErasing(p<span class="op">=</span><span class="fl">0.10</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 29%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Transformación</th>
+<th>Descripción</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RandomHorizontalFlip</strong></td>
+<td>Espejo horizontal con p=0.5</td>
+<td>Las actividades humanas son simétricas lateralmente</td>
+</tr>
+<tr>
+<td><strong>RandomRotation(20°)</strong></td>
+<td>Rotación aleatoria ±20°</td>
+<td>Simula variaciones de ángulo de cámara</td>
+</tr>
+<tr>
+<td><strong>ColorJitter</strong></td>
+<td>Variaciones de brillo, contraste, saturación y tonalidad</td>
+<td>Robustez a condiciones de iluminación</td>
+</tr>
+<tr>
+<td><strong>TrivialAugmentWide</strong></td>
+<td>Una transformación aleatoria de un conjunto amplio (Müller &amp;
+Hutter, 2021)</td>
+<td>Diversidad sin hiperparámetros adicionales</td>
+</tr>
+<tr>
+<td><strong>RandomErasing</strong></td>
+<td>Borrado aleatorio de una región rectangular (p=0.10)</td>
+<td>Simula oclusiones parciales (Zhong et al., 2020)</td>
+</tr>
+<tr>
+<td><strong>Normalize (ImageNet)</strong></td>
+<td>Normaliza con media y std de ImageNet</td>
+<td>Alinea la distribución con los pesos pretrained</td>
+</tr>
+</tbody>
+</table>
+<h3 id="trivialaugmentwide">9.3 TrivialAugmentWide</h3>
+<p>TrivialAugment (Müller &amp; Hutter, 2021) se distingue de
+RandAugment y AutoAugment por su simplicidad: selecciona <strong>una
+sola</strong> transformación al azar (de ~31 posibles) con una magnitud
+uniforme aleatoria. No requiere búsqueda de hiperparámetros y supera
+consistentemente a métodos más complejos:</p>
+<blockquote>
+<p>“We propose TrivialAugment, the simplest possible baseline, which
+samples a single augmentation uniformly at random and applies it with a
+random strength.” (Müller &amp; Hutter, 2021, p. 1)</p>
+</blockquote>
+<hr />
+<h2 id="optimización-adamw-y-schedulers">10. Optimización: AdamW y
+Schedulers</h2>
+<h3 id="adamw">10.1 AdamW</h3>
+<p>Adam (Kingma &amp; Ba, 2015) combina momentos de primer y segundo
+orden para adaptar el learning rate por parámetro. AdamW (Loshchilov
+&amp; Hutter, 2019) corrige un error en la implementación original de
+weight decay en Adam, desacoplando la regularización del paso de
+actualización:</p>
+<p><span class="math display">\[m_t = \beta_1 m_{t-1} + (1 - \beta_1)
+g_t\]</span> <span class="math display">\[v_t = \beta_2 v_{t-1} + (1 -
+\beta_2) g_t^2\]</span> <span class="math display">\[w_t = w_{t-1} -
+\eta \left( \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} + \lambda
+w_{t-1} \right)\]</span></p>
+<h3 id="learning-rate-diferencial">10.2 Learning Rate Diferencial</h3>
+<p>Se asignan learning rates distintos al backbone y al head:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — LR diferencial</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> optim.AdamW([</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;params&quot;</span>: backbone_p, <span class="st">&quot;lr&quot;</span>: LR_BACKBONE},     <span class="co"># 3e-5</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">&quot;params&quot;</span>: model.classifier.parameters(), <span class="st">&quot;lr&quot;</span>: LR_HEAD_PHASE2},  <span class="co"># 1e-4</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>], weight_decay<span class="op">=</span>WEIGHT_DECAY)</span></code></pre></div>
+<p>El backbone ya tiene features bien calibradas de ImageNet y necesita
+ajustes finos (LR bajo). El head se inicializa aleatoriamente y necesita
+un LR más alto para converger rápido (Howard &amp; Ruder, 2018).</p>
+<h3 id="sequentiallr-warmup-cosine-annealing">10.3 SequentialLR: Warmup
++ Cosine Annealing</h3>
+<p>El scheduler combina dos fases:</p>
+<ol type="1">
+<li><p><strong>LinearLR (warmup)</strong>: Escala el LR de 10% al 100%
+durante las primeras 10 épocas. Esto estabiliza el entrenamiento inicial
+cuando los gradientes del head recién inicializado son ruidosos (Goyal
+et al., 2017).</p></li>
+<li><p><strong>CosineAnnealingLR</strong>: Decae el LR siguiendo una
+curva coseno:</p></li>
+</ol>
+<p><span class="math display">\[\eta_t = \eta_{min} +
+\frac{1}{2}(\eta_{max} - \eta_{min})\left(1 + \cos\left(\frac{t
+\pi}{T}\right)\right)\]</span></p>
+<p>El decay coseno produce un decaimiento suave que tiende a encontrar
+mínimos más anchos (y generalizables) que el step decay (Loshchilov
+&amp; Hutter, 2017).</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — SequentialLR</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>warmup <span class="op">=</span> optim.lr_scheduler.LinearLR(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    opt, start_factor<span class="op">=</span><span class="fl">0.1</span>, end_factor<span class="op">=</span><span class="fl">1.0</span>, total_iters<span class="op">=</span>WARMUP_EPOCHS)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>cosine <span class="op">=</span> optim.lr_scheduler.CosineAnnealingLR(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    opt, T_max<span class="op">=</span>PHASE2_EPOCHS <span class="op">-</span> WARMUP_EPOCHS, eta_min<span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>sched <span class="op">=</span> optim.lr_scheduler.SequentialLR(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    opt, [warmup, cosine], milestones<span class="op">=</span>[WARMUP_EPOCHS])</span></code></pre></div>
+<hr />
+<h2 id="stochastic-weight-averaging-swa">11. Stochastic Weight Averaging
+(SWA)</h2>
+<h3 id="fundamento-1">11.1 Fundamento</h3>
+<p>SWA (Izmailov et al., 2018) promedia los pesos del modelo a lo largo
+de múltiples épocas del entrenamiento, obteniendo una solución que
+tiende a estar en regiones más “planas” del landscape de pérdida. Estas
+regiones planas generalizan mejor que mínimos “estrechos” (Hochreiter
+&amp; Schmidhuber, 1997):</p>
+<p><span class="math display">\[w_{SWA} = \frac{1}{n} \sum_{i=1}^{n}
+w_i\]</span></p>
+<h3 id="por-qué-swa-mejora-la-generalización">11.2 ¿Por qué SWA mejora
+la generalización?</h3>
+<p>La intuición es geométrica: el promedio de dos puntos en el espacio
+de pesos que están en mínimos diferentes del landscape de pérdida tiende
+a caer en una región de bajo loss si los mínimos están conectados (“mode
+connectivity”). SWA explora esta propiedad promediando a lo largo de la
+trayectoria de entrenamiento.</p>
+<p>Experimentalmente, SWA produce mejoras de <strong>+0.5–1.5
+pp</strong> en accuracy sin costo computacional adicional significativo
+(Izmailov et al., 2018).</p>
+<h3 id="implementación-2">11.3 Implementación</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — SWA</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>swa_model <span class="op">=</span> AveragedModel(model)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>swa_scheduler <span class="op">=</span> SWALR(optimizer2, swa_lr<span class="op">=</span>SWA_LR)  <span class="co"># SWA_LR = 1e-5</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Durante entrenamiento (a partir de época 20 de F2):</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> swa_active:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    swa_model.update_parameters(model)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    swa_scheduler.step()</span></code></pre></div>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li><code>SWA_START_EPOCH = 20</code>: Se activa después de que el
+modelo haya convergido en las métricas regulares.</li>
+<li><code>SWA_LR = 1e-5</code>: Learning rate constante y bajo para que
+los pesos oscilen cerca del mínimo.</li>
+</ul>
+<h3 id="actualización-de-batchnorm">11.4 Actualización de BatchNorm</h3>
+<p>Después de promediar los pesos, las estadísticas de BatchNorm
+(running_mean, running_var) quedan desactualizadas. Se hace un forward
+pass completo sobre el train set para recalcularlas:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Actualizar BN para SWA</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> swa_active:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    update_bn(train_loader, swa_model, device<span class="op">=</span>device)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    torch.save(swa_model.module.state_dict(), OUTPUT_DIR <span class="op">/</span> <span class="st">&quot;har_cnn_swa.pth&quot;</span>)</span></code></pre></div>
+<hr />
+<h2 id="mixed-precision-training-amp">12. Mixed Precision Training
+(AMP)</h2>
+<h3 id="concepto-1">12.1 Concepto</h3>
+<p>Automatic Mixed Precision (AMP) alterna entre FP32 y FP16 durante el
+entrenamiento para aprovechar los Tensor Cores de las GPUs NVIDIA
+modernas (Micikevicius et al., 2018):</p>
+<ul>
+<li><strong>Forward pass</strong>: FP16 (más rápido, menor
+memoria).</li>
+<li><strong>Loss y gradientes</strong>: FP32 (para estabilidad
+numérica).</li>
+<li><strong>Actualización de pesos</strong>: FP32 (máxima precisión para
+acumulación).</li>
+</ul>
+<h3 id="beneficios">12.2 Beneficios</h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>FP32</th>
+<th>FP16 (AMP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memoria por parámetro</td>
+<td>4 bytes</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>Velocidad (Tensor Cores)</td>
+<td>1×</td>
+<td>2-3×</td>
+</tr>
+<tr>
+<td>Rango dinámico</td>
+<td><span class="math inline">\(\pm 3.4 \times 10^{38}\)</span></td>
+<td><span class="math inline">\(\pm 65,504\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gradscaler">12.3 GradScaler</h3>
+<p>Para compensar el rango reducido de FP16, se usa un
+<code>GradScaler</code> que escala la loss antes del backward para
+evitar underflow de gradientes:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn_colab.ipynb — AMP con GradScaler</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> torch.amp.GradScaler(<span class="st">&quot;cuda&quot;</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.amp.autocast(<span class="st">&quot;cuda&quot;</span>):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(imgs)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> criterion(outputs, labels)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>scaler.scale(loss).backward()</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>scaler.unscale_(optimizer)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>scaler.step(optimizer)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>scaler.update()</span></code></pre></div>
+<p><strong>Nota:</strong> AMP se usa en el notebook de Colab
+(<code>train_cnn_colab.ipynb</code>) con GPU T4. El script local
+(<code>train_cnn.py</code>) opera en FP32 por simplicidad y
+reproducibilidad.</p>
+<hr />
+<h2 id="test-time-augmentation-tta">13. Test-Time Augmentation
+(TTA)</h2>
+<h3 id="concepto-2">13.1 Concepto</h3>
+<p>TTA aplica múltiples transformaciones aleatorias a cada imagen de
+test y promedia las predicciones (Wang et al., 2019). Esto reduce la
+varianza de la predicción y mejora la robustez:</p>
+<p><span class="math display">\[\hat{y} = \frac{1}{N} \sum_{i=1}^{N}
+f(T_i(x))\]</span></p>
+<p>donde <span class="math inline">\(T_i\)</span> son transformaciones
+aleatorias y <span class="math inline">\(f\)</span> es el modelo.</p>
+<h3 id="implementación-3">13.2 Implementación</h3>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — TTA</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tta_augment <span class="op">=</span> transforms.Compose([</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    transforms.ToPILImage(),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    transforms.Resize((IMG_H, IMG_W)),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    transforms.RandomHorizontalFlip(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    transforms.RandomAffine(degrees<span class="op">=</span><span class="dv">10</span>, translate<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    transforms.ColorJitter(brightness<span class="op">=</span><span class="fl">0.1</span>, contrast<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor(),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    transforms.Normalize(mean<span class="op">=</span>IMAGENET_MEAN, std<span class="op">=</span>IMAGENET_STD),</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Promedio de 5 pasadas (1 base + 4 con augmentación)</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_TTA <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    tta_ds <span class="op">=</span> HARDataset(X_test_df, IMG_DIR, transform<span class="op">=</span>tta_augment)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... acumular logits</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>avg_logits <span class="op">/=</span> N_TTA</span></code></pre></div>
+<p><strong>Notas de diseño:</strong></p>
+<ul>
+<li>Las augmentaciones de TTA son <strong>más suaves</strong> que las de
+entrenamiento (sin <code>TrivialAugmentWide</code> ni
+<code>RandomErasing</code>) para no distorsionar excesivamente la
+imagen.</li>
+<li>Se promedian los <strong>logits</strong> (pre-softmax) en vez de las
+probabilidades, lo que es equivalente al ensemble de modelos por
+promedio de predicciones.</li>
+<li>Con 5 pasadas se obtiene típicamente <strong>+0.5–1.0 pp</strong> de
+accuracy (Shanmugam et al., 2021).</li>
+</ul>
+<hr />
+<h2 id="métricas-de-evaluación">14. Métricas de Evaluación</h2>
+<h3 id="accuracy">14.1 Accuracy</h3>
+<p><span class="math display">\[\text{Accuracy} =
+\frac{\text{Predicciones correctas}}{\text{Total de
+predicciones}}\]</span></p>
+<p>Es la métrica principal dado que el dataset está balanceado (840
+imágenes/clase). En datasets desbalanceados, accuracy puede ser engañosa
+(Japkowicz &amp; Stephen, 2002).</p>
+<h3 id="precision-recall-y-f1-score">14.2 Precision, Recall y
+F1-Score</h3>
+<p>Para cada clase <span class="math inline">\(c\)</span>:</p>
+<p><span class="math display">\[\text{Precision}_c = \frac{TP_c}{TP_c +
+FP_c} \qquad \text{Recall}_c = \frac{TP_c}{TP_c + FN_c}\]</span></p>
+<p><span class="math display">\[F1_c = 2 \cdot \frac{\text{Precision}_c
+\cdot \text{Recall}_c}{\text{Precision}_c +
+\text{Recall}_c}\]</span></p>
+<p>El <code>classification_report</code> de scikit-learn calcula estas
+métricas por clase y sus promedios macro (no ponderado) y weighted
+(ponderado por soporte):</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Classification report</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> classification_report(all_labels, all_preds, target_names<span class="op">=</span>labels_sorted)</span></code></pre></div>
+<h3 id="matriz-de-confusión">14.3 Matriz de Confusión</h3>
+<p>La matriz de confusión <span class="math inline">\(C\)</span> de
+<span class="math inline">\(K \times K\)</span> permite visualizar los
+errores de clasificación. <span class="math inline">\(C_{ij}\)</span>
+indica cuántas instancias de la clase <span
+class="math inline">\(i\)</span> fueron predichas como clase <span
+class="math inline">\(j\)</span>. Los elementos diagonales representan
+las predicciones correctas; los fuera de la diagonal representan
+confusiones entre clases.</p>
+<hr />
+<h2 id="reproducibilidad">15. Reproducibilidad</h2>
+<h3 id="importancia">15.1 Importancia</h3>
+<p>La reproducibilidad es un pilar fundamental de la ciencia y la
+ingeniería de ML (Pineau et al., 2021). Un experimento reproducible
+permite:</p>
+<ul>
+<li>Verificar resultados por terceros.</li>
+<li>Comparar modelos bajo las mismas condiciones.</li>
+<li>Depurar problemas de entrenamiento.</li>
+</ul>
+<h3 id="mecanismos-implementados">15.2 Mecanismos Implementados</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data_train/train_cnn.py — Semillas para reproducibilidad</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(SEED)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(SEED)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>random.seed(SEED)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>torch.cuda.manual_seed_all(SEED)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>torch.backends.cudnn.deterministic <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>torch.backends.cudnn.benchmark <span class="op">=</span> <span class="va">False</span></span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 32%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Mecanismo</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>random.seed(42)</code></td>
+<td>Python stdlib</td>
+<td>Reproducir operaciones internas de torchvision</td>
+</tr>
+<tr>
+<td><code>np.random.seed(42)</code></td>
+<td>NumPy</td>
+<td>Reproducir operaciones de scikit-learn y pandas</td>
+</tr>
+<tr>
+<td><code>torch.manual_seed(42)</code></td>
+<td>PyTorch CPU</td>
+<td>Inicialización de pesos y operaciones aleatorias</td>
+</tr>
+<tr>
+<td><code>torch.cuda.manual_seed_all(42)</code></td>
+<td>PyTorch GPU</td>
+<td>Semilla en todas las GPUs</td>
+</tr>
+<tr>
+<td><code>cudnn.deterministic = True</code></td>
+<td>cuDNN</td>
+<td>Forzar algoritmos deterministas</td>
+</tr>
+<tr>
+<td><code>cudnn.benchmark = False</code></td>
+<td>cuDNN</td>
+<td>Desactivar autotuning no determinista</td>
+</tr>
+<tr>
+<td><code>Generator().manual_seed(42)</code></td>
+<td>DataLoader</td>
+<td>Shuffle de batches reproducible</td>
+</tr>
+<tr>
+<td><code>worker_init_fn</code></td>
+<td>DataLoader workers</td>
+<td>Semilla por worker = 42 + worker_id</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Trade-off Colab:</strong> El notebook de Colab prioriza
+velocidad con <code>deterministic=False</code>,
+<code>benchmark=True</code>, TF32 y <code>torch.compile</code>, lo que
+puede producir variaciones entre ejecuciones (NVIDIA, 2024).</p>
+</blockquote>
+<hr />
+<h2 id="referencias">16. Referencias</h2>
+<p>Chawla, N. V., Bowyer, K. W., Hall, L. O., &amp; Kegelmeyer, W. P.
+(2002). SMOTE: Synthetic Minority Over-sampling Technique. <em>Journal
+of Artificial Intelligence Research</em>, <em>16</em>, 321–357.
+https://doi.org/10.1613/jair.953</p>
+<p>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep
+Learning</em>. MIT Press. https://www.deeplearningbook.org/</p>
+<p>Goyal, P., Dollár, P., Girshick, R., Noordhuis, P., Wesolowski, L.,
+Kyrola, A., Tulloch, A., Jia, Y., &amp; He, K. (2017). Accurate, Large
+Minibatch SGD: Training ImageNet in 1 Hour. <em>arXiv preprint
+arXiv:1706.02677</em>. https://arxiv.org/abs/1706.02677</p>
+<p>He, H., &amp; Garcia, E. A. (2009). Learning from Imbalanced Data.
+<em>IEEE Transactions on Knowledge and Data Engineering</em>,
+<em>21</em>(9), 1263–1284. https://doi.org/10.1109/TKDE.2008.239</p>
+<p>Hochreiter, S., &amp; Schmidhuber, J. (1997). Flat Minima. <em>Neural
+Computation</em>, <em>9</em>(1), 1–42.
+https://doi.org/10.1162/neco.1997.9.1.1</p>
+<p>Howard, J., &amp; Ruder, S. (2018). Universal Language Model
+Fine-tuning for Text Classification. <em>Proceedings of the 56th Annual
+Meeting of the Association for Computational Linguistics (ACL)</em>,
+328–339. https://doi.org/10.18653/v1/P18-1031</p>
+<p>Ioffe, S., &amp; Szegedy, C. (2015). Batch Normalization:
+Accelerating Deep Network Training by Reducing Internal Covariate Shift.
+<em>Proceedings of the 32nd International Conference on Machine Learning
+(ICML)</em>, 448–456. https://proceedings.mlr.press/v37/ioffe15.html</p>
+<p>Izmailov, P., Podoprikhin, D., Garipov, T., Vetrov, D., &amp; Wilson,
+A. G. (2018). Averaging Weights Leads to Wider Optima and Better
+Generalization. <em>Proceedings of the 34th Conference on Uncertainty in
+Artificial Intelligence (UAI)</em>, 876–885.
+https://arxiv.org/abs/1803.05407</p>
+<p>Japkowicz, N., &amp; Stephen, S. (2002). The Class Imbalance Problem:
+A Systematic Study. <em>Intelligent Data Analysis</em>, <em>6</em>(5),
+429–449. https://doi.org/10.3233/IDA-2002-6504</p>
+<p>Kingma, D. P., &amp; Ba, J. (2015). Adam: A Method for Stochastic
+Optimization. <em>Proceedings of the 3rd International Conference on
+Learning Representations (ICLR)</em>.
+https://arxiv.org/abs/1412.6980</p>
+<p>Krogh, A., &amp; Hertz, J. A. (1991). A Simple Weight Decay Can
+Improve Generalization. <em>Advances in Neural Information Processing
+Systems (NeurIPS)</em>, <em>4</em>, 950–957.</p>
+<p>Lin, T.-Y., Goyal, P., Girshick, R., He, K., &amp; Dollár, P. (2017).
+Focal Loss for Dense Object Detection. <em>Proceedings of the IEEE
+International Conference on Computer Vision (ICCV)</em>, 2980–2988.
+https://doi.org/10.1109/ICCV.2017.324</p>
+<p>Liu, Z., Mao, H., Wu, C.-Y., Feichtenhofer, C., Darrell, T., &amp;
+Xie, S. (2022). A ConvNet for the 2020s. <em>Proceedings of the IEEE/CVF
+Conference on Computer Vision and Pattern Recognition (CVPR)</em>,
+11976–11986. https://doi.org/10.1109/CVPR52688.2022.01167</p>
+<p>Loshchilov, I., &amp; Hutter, F. (2017). SGDR: Stochastic Gradient
+Descent with Warm Restarts. <em>Proceedings of the 5th International
+Conference on Learning Representations (ICLR)</em>.
+https://arxiv.org/abs/1608.03983</p>
+<p>Loshchilov, I., &amp; Hutter, F. (2019). Decoupled Weight Decay
+Regularization. <em>Proceedings of the 7th International Conference on
+Learning Representations (ICLR)</em>.
+https://arxiv.org/abs/1711.05101</p>
+<p>Micikevicius, P., Narang, S., Alben, J., Diamos, G., Elsen, E.,
+Garcia, D., Ginsburg, B., Houston, M., Kuchaiev, O., Venkatesh, G.,
+&amp; Wu, H. (2018). Mixed Precision Training. <em>Proceedings of the
+6th International Conference on Learning Representations (ICLR)</em>.
+https://arxiv.org/abs/1710.03740</p>
+<p>Müller, R., Kornblith, S., &amp; Hinton, G. E. (2019). When Does
+Label Smoothing Help? <em>Advances in Neural Information Processing
+Systems (NeurIPS)</em>, <em>32</em>, 4694–4703.
+https://arxiv.org/abs/1906.02629</p>
+<p>Müller, S. G., &amp; Hutter, F. (2021). TrivialAugment: Tuning-free
+Yet State-of-the-Art Data Augmentation. <em>Proceedings of the IEEE/CVF
+International Conference on Computer Vision (ICCV)</em>, 774–782.
+https://doi.org/10.1109/ICCV48922.2021.00081</p>
+<p>Nair, V., &amp; Hinton, G. E. (2010). Rectified Linear Units Improve
+Restricted Boltzmann Machines. <em>Proceedings of the 27th International
+Conference on Machine Learning (ICML)</em>, 807–814.</p>
+<p>NVIDIA. (2024). <em>CUDA Toolkit Documentation: Reproducibility</em>.
+https://docs.nvidia.com/cuda/cublas/index.html#reproducibility</p>
+<p>OpenCV. (2024). <em>Geometric Image Transformations</em>.
+https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html</p>
+<p>Pascanu, R., Mikolov, T., &amp; Bengio, Y. (2013). On the Difficulty
+of Training Recurrent Neural Networks. <em>Proceedings of the 30th
+International Conference on Machine Learning (ICML)</em>, 1310–1318.
+https://proceedings.mlr.press/v28/pascanu13.html</p>
+<p>Pineau, J., Vincent-Lamarre, P., Sinha, K., Larivière, V.,
+Beygelzimer, A., d’Alché-Buc, F., Fox, E., &amp; Larochelle, H. (2021).
+Improving Reproducibility in Machine Learning Research. <em>Journal of
+Machine Learning Research</em>, <em>22</em>(164), 1–20.
+https://jmlr.org/papers/v22/20-303.html</p>
+<p>Poppe, R. (2010). A Survey on Vision-Based Human Action Recognition.
+<em>Image and Vision Computing</em>, <em>28</em>(6), 976–990.
+https://doi.org/10.1016/j.imavis.2009.11.014</p>
+<p>Reza, A. M. (2004). Realization of the Contrast Limited Adaptive
+Histogram Equalization (CLAHE) for Real-Time Image Enhancement.
+<em>Journal of VLSI Signal Processing Systems</em>, <em>38</em>(1),
+35–44. https://doi.org/10.1023/B:VLSI.0000028532.53893.82</p>
+<p>Shanmugam, D., Blalock, D., Balber, G., &amp; Guttag, J. (2021).
+Better Aggregation in Test-Time Augmentation. <em>Proceedings of the
+IEEE/CVF International Conference on Computer Vision (ICCV)</em>,
+1214–1223. https://doi.org/10.1109/ICCV48922.2021.00125</p>
+<p>Shorten, C., &amp; Khoshgoftaar, T. M. (2019). A Survey on Image Data
+Augmentation for Deep Learning. <em>Journal of Big Data</em>,
+<em>6</em>, 60. https://doi.org/10.1186/s40537-019-0197-0</p>
+<p>Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., &amp;
+Salakhutdinov, R. (2014). Dropout: A Simple Way to Prevent Neural
+Networks from Overfitting. <em>Journal of Machine Learning
+Research</em>, <em>15</em>(56), 1929–1958.
+https://jmlr.org/papers/v15/srivastava14a.html</p>
+<p>Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., &amp; Wojna, Z.
+(2016). Rethinking the Inception Architecture for Computer Vision.
+<em>Proceedings of the IEEE Conference on Computer Vision and Pattern
+Recognition (CVPR)</em>, 2818–2826.
+https://doi.org/10.1109/CVPR.2016.308</p>
+<p>Tukey, J. W. (1977). <em>Exploratory Data Analysis</em>.
+Addison-Wesley.</p>
+<p>Wang, G., Li, W., Aertsen, M., Deprest, J., Ourselin, S., &amp;
+Vercauteren, T. (2019). Aleatoric Uncertainty Estimation with Test-Time
+Augmentation for Medical Image Segmentation with Convolutional Neural
+Networks. <em>Neurocomputing</em>, <em>338</em>, 34–45.
+https://doi.org/10.1016/j.neucom.2019.01.103</p>
+<p>Welford, B. P. (1962). Note on a Method for Calculating Corrected
+Sums of Squares and Products. <em>Technometrics</em>, <em>4</em>(3),
+419–420. https://doi.org/10.1080/00401706.1962.10490022</p>
+<p>Yosinski, J., Clune, J., Bengio, Y., &amp; Lipson, H. (2014). How
+Transferable Are Features in Deep Neural Networks? <em>Advances in
+Neural Information Processing Systems (NeurIPS)</em>, <em>27</em>,
+3320–3328. https://arxiv.org/abs/1411.1792</p>
+<p>Zeiler, M. D., &amp; Fergus, R. (2014). Visualizing and Understanding
+Convolutional Networks. <em>Proceedings of the European Conference on
+Computer Vision (ECCV)</em>, 818–833.
+https://doi.org/10.1007/978-3-319-10590-1_53</p>
+<p>Zhong, Z., Zheng, L., Kang, G., Li, S., &amp; Yang, Y. (2020). Random
+Erasing Data Augmentation. <em>Proceedings of the AAAI Conference on
+Artificial Intelligence</em>, <em>34</em>(7), 13001–13008.
+https://doi.org/10.1609/aaai.v34i07.7000</p>
+<p>Zuiderveld, K. (1994). Contrast Limited Adaptive Histogram
+Equalization. In P. S. Heckbert (Ed.), <em>Graphics Gems IV</em>
+(pp. 474–485). Academic Press.
+https://doi.org/10.1016/B978-0-12-336156-1.50061-6</p>
+<hr />
+<div data-align="center">
+<p><em>Documento generado como parte del TP de Machine Learning —
+Fundamentos teóricos del proyecto HAR</em></p>
+</div>
+</body>
+</html>
